@@ -19,6 +19,6 @@ jobs:
       with:
         required-ros-distributions: melodic
     - name: install catkin_ws dependencies
-      run: "cd catkin_ws && rosdep install"
+      run: "source /opt/ros/melodic/setup.bash && cd catkin_ws && rosdep install"
     - name: build and test
-      run: "source /opt/ros/melodic/setup.bash && catkin_make run_tests"
+      run: "source /opt/ros/melodic/setup.bash && cd catkin_ws && catkin_make run_tests"
