@@ -22,5 +22,7 @@ jobs:
       run: rosdep update
     - name: install catkin_ws dependencies
       run: "source /opt/ros/melodic/setup.bash && cd catkin_ws/ && rosdep install --from-paths src --ignore-src -r -y"
+    - name: install missing arpa/inet.h
+      run: sudo apt install libc6-dev   # libc6-dev has arpa/inet.h inside of it
     - name: build and test
       run: "source /opt/ros/melodic/setup.bash && cd catkin_ws/ && catkin_make run_tests"
