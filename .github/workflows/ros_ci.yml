@@ -21,6 +21,6 @@ jobs:
     - name: update rosdep
       run: rosdep update
     - name: install catkin_ws dependencies
-      run: "source /opt/ros/melodic/setup.bash && cd catkin_ws && rosdep install udp_com"
+      run: "source /opt/ros/melodic/setup.bash && cd catkin_ws/ && rosdep install --from-paths src --ignore-src -r -y"
     - name: build and test
-      run: "source /opt/ros/melodic/setup.bash && cd catkin_ws && catkin_make run_tests"
+      run: "source /opt/ros/melodic/setup.bash && cd catkin_ws/ && catkin_make run_tests"
