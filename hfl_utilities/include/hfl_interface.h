@@ -12,7 +12,7 @@
 #include <winsock2.h>
 #endif
 
-#ifdef linux
+#ifdef __linux__
 #include <arpa/inet.h>  // ntohl()
 #endif
 
