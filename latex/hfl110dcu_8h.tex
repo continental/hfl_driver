@@ -1,0 +1,87 @@
+\hypertarget{hfl110dcu_8h}{}\doxysection{include/image\+\_\+processor/hfl110dcu.h File Reference}
+\label{hfl110dcu_8h}\index{include/image\_processor/hfl110dcu.h@{include/image\_processor/hfl110dcu.h}}
+
+
+This file defines the H\+F\+L110\+D\+CU image processor class.  
+
+
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$angles/angles.\+h$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$camera\+\_\+info\+\_\+manager/camera\+\_\+info\+\_\+manager.\+h$>$}\newline
+{\ttfamily \#include $<$cv\+\_\+bridge/cv\+\_\+bridge.\+h$>$}\newline
+{\ttfamily \#include $<$geometry\+\_\+msgs/\+Transform\+Stamped.\+h$>$}\newline
+{\ttfamily \#include $<$hfl\+\_\+driver/\+To\+F\+Image.\+h$>$}\newline
+{\ttfamily \#include $<$image\+\_\+transport/image\+\_\+transport.\+h$>$}\newline
+{\ttfamily \#include $<$ros/package.\+h$>$}\newline
+{\ttfamily \#include $<$tf2/\+Linear\+Math/\+Quaternion.\+h$>$}\newline
+{\ttfamily \#include $<$tf2\+\_\+geometry\+\_\+msgs/tf2\+\_\+geometry\+\_\+msgs.\+h$>$}\newline
+{\ttfamily \#include $<$tf2\+\_\+ros/transform\+\_\+broadcaster.\+h$>$}\newline
+{\ttfamily \#include $<$base\+\_\+hfl110dcu.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}ros/ros.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$geometry\+\_\+msgs/\+Point.\+h$>$}\newline
+{\ttfamily \#include $<$sensor\+\_\+msgs/\+Point\+Cloud2.\+h$>$}\newline
+{\ttfamily \#include $<$sensor\+\_\+msgs/point\+\_\+cloud2\+\_\+iterator.\+h$>$}\newline
+Include dependency graph for hfl110dcu.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{hfl110dcu_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=332pt]{hfl110dcu_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structhfl_1_1PointCloudReturn}{hfl\+::\+Point\+Cloud\+Return}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classhfl_1_1HFL110DCU}{H\+F\+L110\+D\+CU}} v1 frame struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structhfl_1_1UdpPacketHeader}{hfl\+::\+Udp\+Packet\+Header}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classhfl_1_1HFL110DCU}{H\+F\+L110\+D\+CU}} v1 ethernet packet header struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structhfl_1_1CameraIntrinsics}{hfl\+::\+Camera\+Intrinsics}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classhfl_1_1HFL110DCU}{H\+F\+L110\+D\+CU}} v1 ethernet extrinsics struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structhfl_1_1CameraExtrinsics}{hfl\+::\+Camera\+Extrinsics}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classhfl_1_1HFL110DCU}{H\+F\+L110\+D\+CU}} v1 ethernet extrinsics struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structhfl_1_1UdpFrame}{hfl\+::\+Udp\+Frame}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classhfl_1_1HFL110DCU}{H\+F\+L110\+D\+CU}} v1 ethernet frame struct. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classhfl_1_1HFL110DCU}{hfl\+::\+H\+F\+L110\+D\+CU}}
+\begin{DoxyCompactList}\small\item\em Implements the \mbox{\hyperlink{classhfl_1_1HFL110DCU}{H\+F\+L110\+D\+CU}} camera image parsing and publishing. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{hfl110dcu_8h_a14417c419d79d025dafb827bd30a0cfd}\label{hfl110dcu_8h_a14417c419d79d025dafb827bd30a0cfd}} 
+\#define {\bfseries H\+F\+L110\+B2\+\_\+\+M\+A\+G\+I\+C\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+8\+\_\+\+B\+IT}~0.\+1953125
+\item 
+\mbox{\Hypertarget{hfl110dcu_8h_af7d1ecbe388d470ab747c03a01a38c8f}\label{hfl110dcu_8h_af7d1ecbe388d470ab747c03a01a38c8f}} 
+\#define {\bfseries H\+F\+L110\+B2\+\_\+\+M\+A\+G\+I\+C\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+10\+\_\+\+B\+IT}~0.\+048828125
+\item 
+\mbox{\Hypertarget{hfl110dcu_8h_a85fd9849f5cdea4302b88be1836e923e}\label{hfl110dcu_8h_a85fd9849f5cdea4302b88be1836e923e}} 
+\#define {\bfseries H\+F\+L110\+B2\+\_\+\+M\+A\+G\+I\+C\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+12\+\_\+\+B\+IT}~0.\+01220703125
+\item 
+\mbox{\Hypertarget{hfl110dcu_8h_a1ace7223d027d4655360bface3e60a0a}\label{hfl110dcu_8h_a1ace7223d027d4655360bface3e60a0a}} 
+\#define {\bfseries H\+F\+L110\+B2\+\_\+\+M\+A\+G\+I\+C\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+14\+\_\+\+B\+IT}~0.\+00305176
+\item 
+\mbox{\Hypertarget{hfl110dcu_8h_aa3a2c60ea4218729fd290f81f5e60cc4}\label{hfl110dcu_8h_aa3a2c60ea4218729fd290f81f5e60cc4}} 
+\#define {\bfseries H\+F\+L110\+\_\+\+M\+A\+G\+I\+C\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+16\+\_\+\+B\+IT}~0.\+000762951
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{hfl110dcu_8h_af9eca974a090c4461c5a58a3351bb924}\label{hfl110dcu_8h_af9eca974a090c4461c5a58a3351bb924}} 
+const float {\bfseries N\+O\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+D\+I\+S\+T\+A\+N\+C\+ES} = N\+AN
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file defines the H\+F\+L110\+D\+CU image processor class. 
+
+Copyright 2019 Continental AG 

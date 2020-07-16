@@ -1,0 +1,157 @@
+\hypertarget{classhfl_1_1HFL110DCU}{}\doxysection{hfl\+::H\+F\+L110\+D\+CU Class Reference}
+\label{classhfl_1_1HFL110DCU}\index{hfl::HFL110DCU@{hfl::HFL110DCU}}
+
+
+Implements the \mbox{\hyperlink{classhfl_1_1HFL110DCU}{H\+F\+L110\+D\+CU}} camera image parsing and publishing.  
+
+
+
+
+{\ttfamily \#include $<$hfl110dcu.\+h$>$}
+
+
+
+Inheritance diagram for hfl\+::H\+F\+L110\+D\+CU\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=175pt]{classhfl_1_1HFL110DCU__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for hfl\+::H\+F\+L110\+D\+CU\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=175pt]{classhfl_1_1HFL110DCU__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classhfl_1_1HFL110DCU_adf1c01b9d7e4788b71cb6531373bd664}{H\+F\+L110\+D\+CU}} (std\+::string model, std\+::string version, std\+::string frame\+\_\+id, ros\+::\+Node\+Handle \&node\+\_\+handler)
+\item 
+bool \mbox{\hyperlink{classhfl_1_1HFL110DCU_a7a4662d4f55da5de3e0433c3161589b9}{parse\+Frame}} (int start\+\_\+byte, const std\+::vector$<$ uint8\+\_\+t $>$ \&packet) override
+\item 
+bool \mbox{\hyperlink{classhfl_1_1HFL110DCU_a153a36df92eddacae83ba035ccd2a6dd}{process\+Frame\+Data}} (const std\+::vector$<$ uint8\+\_\+t $>$ \&data) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_a02910d8fa7f021f08f1f83e19613016d}\label{classhfl_1_1HFL110DCU_a02910d8fa7f021f08f1f83e19613016d}} 
+ros\+::\+Node\+Handle \mbox{\hyperlink{classhfl_1_1HFL110DCU_a02910d8fa7f021f08f1f83e19613016d}{node\+\_\+handler\+\_\+}}
+\begin{DoxyCompactList}\small\item\em R\+OS node handler. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_ada3de1f9b0a28cfc5e94a7ec607cff03}\label{classhfl_1_1HFL110DCU_ada3de1f9b0a28cfc5e94a7ec607cff03}} 
+int \mbox{\hyperlink{classhfl_1_1HFL110DCU_ada3de1f9b0a28cfc5e94a7ec607cff03}{bytes\+\_\+received\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Received packet bytes from H\+F\+L110. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_a6ec55b3d013764be7c9efc8efabdcafa}\label{classhfl_1_1HFL110DCU_a6ec55b3d013764be7c9efc8efabdcafa}} 
+std\+::shared\+\_\+ptr$<$ std\+\_\+msgs\+::\+Header $>$ \mbox{\hyperlink{classhfl_1_1HFL110DCU_a6ec55b3d013764be7c9efc8efabdcafa}{frame\+\_\+header\+\_\+message\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Frame Header message. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_a61ae50644ab0575e63acc783eb1d7c5a}\label{classhfl_1_1HFL110DCU_a61ae50644ab0575e63acc783eb1d7c5a}} 
+std\+::shared\+\_\+ptr$<$ std\+\_\+msgs\+::\+Header $>$ \mbox{\hyperlink{classhfl_1_1HFL110DCU_a61ae50644ab0575e63acc783eb1d7c5a}{tf\+\_\+header\+\_\+message\+\_\+}}
+\begin{DoxyCompactList}\small\item\em TF Header message. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_ad7f798afa2f1d0a3dfa404acf8d9c4d0}\label{classhfl_1_1HFL110DCU_ad7f798afa2f1d0a3dfa404acf8d9c4d0}} 
+uint8\+\_\+t \mbox{\hyperlink{classhfl_1_1HFL110DCU_ad7f798afa2f1d0a3dfa404acf8d9c4d0}{row\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Row and column Counter. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_afc964d04c2c50ee214915d93b1fe2103}\label{classhfl_1_1HFL110DCU_afc964d04c2c50ee214915d93b1fe2103}} 
+uint8\+\_\+t {\bfseries col\+\_\+}
+\item 
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_adffb64de0c8ab50aae94d6981270f482}\label{classhfl_1_1HFL110DCU_adffb64de0c8ab50aae94d6981270f482}} 
+uint8\+\_\+t \mbox{\hyperlink{classhfl_1_1HFL110DCU_adffb64de0c8ab50aae94d6981270f482}{expected\+\_\+packet\+\_\+}} = 0
+\begin{DoxyCompactList}\small\item\em Return counter. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_a504fb41297b24868c7fc70e377d3647e}\label{classhfl_1_1HFL110DCU_a504fb41297b24868c7fc70e377d3647e}} 
+camera\+\_\+info\+\_\+manager\+::\+Camera\+Info\+Manager $\ast$ {\bfseries camera\+\_\+info\+\_\+manager\+\_\+}
+\item 
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_a03767beba76392bc5eef82072f3557d0}\label{classhfl_1_1HFL110DCU_a03767beba76392bc5eef82072f3557d0}} 
+cv\+\_\+bridge\+::\+Cv\+Image\+Ptr \mbox{\hyperlink{classhfl_1_1HFL110DCU_a03767beba76392bc5eef82072f3557d0}{p\+\_\+image\+\_\+depth\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Pointer to depth image. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_ac1302150d2def320112dab309690f893}\label{classhfl_1_1HFL110DCU_ac1302150d2def320112dab309690f893}} 
+cv\+\_\+bridge\+::\+Cv\+Image\+Ptr \mbox{\hyperlink{classhfl_1_1HFL110DCU_ac1302150d2def320112dab309690f893}{p\+\_\+image\+\_\+intensity\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Pointer to 16 bit intensity image. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_aeee62395b01fb8462f2ce68c0819235b}\label{classhfl_1_1HFL110DCU_aeee62395b01fb8462f2ce68c0819235b}} 
+image\+\_\+transport\+::\+Camera\+Publisher \mbox{\hyperlink{classhfl_1_1HFL110DCU_aeee62395b01fb8462f2ce68c0819235b}{pub\+\_\+depth\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Depth image publisher. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_ae4837b6eceec689d72f60f292d43de0e}\label{classhfl_1_1HFL110DCU_ae4837b6eceec689d72f60f292d43de0e}} 
+image\+\_\+transport\+::\+Camera\+Publisher \mbox{\hyperlink{classhfl_1_1HFL110DCU_ae4837b6eceec689d72f60f292d43de0e}{pub\+\_\+depth2\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Depth image publisher second return 2. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_a3ca1b59ff6326b2bbed537e06f4d4749}\label{classhfl_1_1HFL110DCU_a3ca1b59ff6326b2bbed537e06f4d4749}} 
+image\+\_\+transport\+::\+Camera\+Publisher \mbox{\hyperlink{classhfl_1_1HFL110DCU_a3ca1b59ff6326b2bbed537e06f4d4749}{pub\+\_\+intensity\+\_\+}}
+\begin{DoxyCompactList}\small\item\em 16 bit Intensity image publisher \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_aceb6734caeaa8df14a3ff3ac73abaec0}\label{classhfl_1_1HFL110DCU_aceb6734caeaa8df14a3ff3ac73abaec0}} 
+image\+\_\+transport\+::\+Camera\+Publisher \mbox{\hyperlink{classhfl_1_1HFL110DCU_aceb6734caeaa8df14a3ff3ac73abaec0}{pub\+\_\+intensity2\+\_\+}}
+\begin{DoxyCompactList}\small\item\em 16 bit Intensity image publisher return 2 \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_a420458bc2f02632e4afdf1851782f2a9}\label{classhfl_1_1HFL110DCU_a420458bc2f02632e4afdf1851782f2a9}} 
+cv\+\_\+bridge\+::\+Cv\+Image\+Ptr \mbox{\hyperlink{classhfl_1_1HFL110DCU_a420458bc2f02632e4afdf1851782f2a9}{p\+\_\+image\+\_\+depth2\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Pointer to depth image second return. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_a669a2a48d1c3ae7dda1dab0e19d5c063}\label{classhfl_1_1HFL110DCU_a669a2a48d1c3ae7dda1dab0e19d5c063}} 
+cv\+\_\+bridge\+::\+Cv\+Image\+Ptr \mbox{\hyperlink{classhfl_1_1HFL110DCU_a669a2a48d1c3ae7dda1dab0e19d5c063}{p\+\_\+image\+\_\+intensity2\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Pointer to 16 bit intensity image second return. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implements the \mbox{\hyperlink{classhfl_1_1HFL110DCU}{H\+F\+L110\+D\+CU}} camera image parsing and publishing. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_adf1c01b9d7e4788b71cb6531373bd664}\label{classhfl_1_1HFL110DCU_adf1c01b9d7e4788b71cb6531373bd664}} 
+\index{hfl::HFL110DCU@{hfl::HFL110DCU}!HFL110DCU@{HFL110DCU}}
+\index{HFL110DCU@{HFL110DCU}!hfl::HFL110DCU@{hfl::HFL110DCU}}
+\doxysubsubsection{\texorpdfstring{HFL110DCU()}{HFL110DCU()}}
+{\footnotesize\ttfamily hfl\+::\+H\+F\+L110\+D\+C\+U\+::\+H\+F\+L110\+D\+CU (\begin{DoxyParamCaption}\item[{std\+::string}]{model,  }\item[{std\+::string}]{version,  }\item[{std\+::string}]{frame\+\_\+id,  }\item[{ros\+::\+Node\+Handle \&}]{node\+\_\+handler }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{classhfl_1_1HFL110DCU}{H\+F\+L110\+D\+CU}} image processor constructor.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em model} & camera hfl model \\
+\hline
+\mbox{\texttt{ in}}  & {\em version} & camera version \\
+\hline
+\mbox{\texttt{ in}}  & {\em frame\+\_\+id} & camera\textquotesingle{}s coordinate frame name \\
+\hline
+\mbox{\texttt{ in}}  & {\em node\+\_\+handler} & reference to the ros node handler \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_a7a4662d4f55da5de3e0433c3161589b9}\label{classhfl_1_1HFL110DCU_a7a4662d4f55da5de3e0433c3161589b9}} 
+\index{hfl::HFL110DCU@{hfl::HFL110DCU}!parseFrame@{parseFrame}}
+\index{parseFrame@{parseFrame}!hfl::HFL110DCU@{hfl::HFL110DCU}}
+\doxysubsubsection{\texorpdfstring{parseFrame()}{parseFrame()}}
+{\footnotesize\ttfamily bool hfl\+::\+H\+F\+L110\+D\+C\+U\+::parse\+Frame (\begin{DoxyParamCaption}\item[{int}]{start\+\_\+byte,  }\item[{const std\+::vector$<$ uint8\+\_\+t $>$ \&}]{packet }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+Parse out the packet data into depth and intensity images
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em starting} & byte, packet to parse\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool true if successfully parsed packet 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhfl_1_1HFL110DCU_a153a36df92eddacae83ba035ccd2a6dd}\label{classhfl_1_1HFL110DCU_a153a36df92eddacae83ba035ccd2a6dd}} 
+\index{hfl::HFL110DCU@{hfl::HFL110DCU}!processFrameData@{processFrameData}}
+\index{processFrameData@{processFrameData}!hfl::HFL110DCU@{hfl::HFL110DCU}}
+\doxysubsubsection{\texorpdfstring{processFrameData()}{processFrameData()}}
+{\footnotesize\ttfamily bool hfl\+::\+H\+F\+L110\+D\+C\+U\+::process\+Frame\+Data (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ uint8\+\_\+t $>$ \&}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+Process data frame from udp packets.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em data} & frame data array\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool true if successful 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/image\+\_\+processor/\mbox{\hyperlink{hfl110dcu_8h}{hfl110dcu.\+h}}\item 
+src/image\+\_\+processor/\mbox{\hyperlink{hfl110dcu_8cpp}{hfl110dcu.\+cpp}}\end{DoxyCompactItemize}

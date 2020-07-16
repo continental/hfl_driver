@@ -1,0 +1,61 @@
+\hypertarget{camera__commander_8h}{}\doxysection{include/camera\+\_\+commander/camera\+\_\+commander.h File Reference}
+\label{camera__commander_8h}\index{include/camera\_commander/camera\_commander.h@{include/camera\_commander/camera\_commander.h}}
+
+
+This file defines the Camera\+Commander class.  
+
+
+{\ttfamily \#include $<$dynamic\+\_\+reconfigure/server.\+h$>$}\newline
+{\ttfamily \#include $<$hfl\+\_\+driver/\+H\+F\+L\+Config.\+h$>$}\newline
+{\ttfamily \#include $<$nodelet/nodelet.\+h$>$}\newline
+{\ttfamily \#include $<$hfl\+\_\+interface.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}ros/ros.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}udp\+\_\+com/\+Udp\+Packet.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}udp\+\_\+com/\+Udp\+Send.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}udp\+\_\+com/\+Udp\+Socket.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+Include dependency graph for camera\+\_\+commander.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{camera__commander_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=219pt]{camera__commander_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classhfl_1_1CameraCommander}{hfl\+::\+Camera\+Commander}}
+\begin{DoxyCompactList}\small\item\em Implements the camera configuration and setup. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{camera__commander_8h_a71143b37336a4b82276f171f21f3341b}\label{camera__commander_8h_a71143b37336a4b82276f171f21f3341b}} 
+enum \mbox{\hyperlink{camera__commander_8h_a71143b37336a4b82276f171f21f3341b}{hfl\+::commander\+\_\+states}} \{ {\bfseries state\+\_\+probe} = 0, 
+{\bfseries state\+\_\+init}, 
+{\bfseries state\+\_\+done}, 
+{\bfseries state\+\_\+error}
+ \}
+\begin{DoxyCompactList}\small\item\em Commander states enum. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{camera__commander_8h_a3bdbcdc4bf6bde689ddffcf5b659b981}\label{camera__commander_8h_a3bdbcdc4bf6bde689ddffcf5b659b981}} 
+enum \mbox{\hyperlink{camera__commander_8h_a3bdbcdc4bf6bde689ddffcf5b659b981}{hfl\+::error\+\_\+codes}} \{ {\bfseries no\+\_\+error} = 0, 
+{\bfseries frame\+\_\+socket\+\_\+error}, 
+{\bfseries object\+\_\+socket\+\_\+error}, 
+{\bfseries lut\+\_\+socket\+\_\+error}
+ \}
+\begin{DoxyCompactList}\small\item\em Error Codes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file defines the Camera\+Commander class. 
+
+Copyright 2019 Continental AG 

@@ -1,0 +1,320 @@
+\hypertarget{classhfl_1_1CameraCommander}{}\doxysection{hfl\+::Camera\+Commander Class Reference}
+\label{classhfl_1_1CameraCommander}\index{hfl::CameraCommander@{hfl::CameraCommander}}
+
+
+Implements the camera configuration and setup.  
+
+
+
+
+{\ttfamily \#include $<$camera\+\_\+commander.\+h$>$}
+
+
+
+Inheritance diagram for hfl\+::Camera\+Commander\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=197pt]{classhfl_1_1CameraCommander__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for hfl\+::Camera\+Commander\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=197pt]{classhfl_1_1CameraCommander__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classhfl_1_1CameraCommander_acee92c61f13bfb39373314b39c87b1dc}{Camera\+Commander}} ()
+\item 
+\mbox{\hyperlink{classhfl_1_1CameraCommander_a78c4812741f148326e0068ebef616b2b}{$\sim$\+Camera\+Commander}} ()
+\item 
+void \mbox{\hyperlink{classhfl_1_1CameraCommander_a4e8253b5e988f56f9e376697bb2597fc}{on\+Init}} ()
+\item 
+bool \mbox{\hyperlink{classhfl_1_1CameraCommander_a4eff414ee628f97bbb6b1aa1272adeca}{udp\+Init}} ()
+\item 
+bool \mbox{\hyperlink{classhfl_1_1CameraCommander_a260172fb640535e99d6f163fd745dfef}{create\+Socket}} (std\+::string computer\+Addr, std\+::string camera\+Addr, uint16\+\_\+t port, bool is\+Multicast)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classhfl_1_1CameraCommander_acfd395fe2df6a8aa9e05da0b0cb01de6}{set\+Commander\+State}} (const ros\+::\+Timer\+Event \&timer\+\_\+event)
+\item 
+bool \mbox{\hyperlink{classhfl_1_1CameraCommander_a1331d6ddd28ef2d3acc5ee8cef578817}{set\+Flash}} ()
+\item 
+void \mbox{\hyperlink{classhfl_1_1CameraCommander_a2b3abf68e33b5118a856f3382a4d60c5}{frame\+Data\+Callback}} (const udp\+\_\+com\+::\+Udp\+Packet \&udp\+\_\+packet)
+\item 
+void \mbox{\hyperlink{classhfl_1_1CameraCommander_abb45b8570e98137f0b6b1a3c23ad84c9}{object\+Data\+Callback}} (const udp\+\_\+com\+::\+Udp\+Packet \&udp\+\_\+packet)
+\item 
+void \mbox{\hyperlink{classhfl_1_1CameraCommander_a9374685e89e2fc6dd54dad806e31c3ee}{lut\+Data\+Callback}} (const udp\+\_\+com\+::\+Udp\+Packet \&udp\+\_\+packet)
+\item 
+bool \mbox{\hyperlink{classhfl_1_1CameraCommander_abcc632d70a30cfd0c5155158b6c2839d}{send\+Command}} (const std\+::vector$<$ uint8\+\_\+t $>$ \&data)
+\item 
+void \mbox{\hyperlink{classhfl_1_1CameraCommander_a590e478d771d64f2ead1352805084cd1}{dynamic\+Pameters\+Callback}} (hfl\+\_\+driver\+::\+H\+F\+L\+Config \&config, uint32\+\_\+t level)
+\item 
+\mbox{\hyperlink{camera__commander_8h_a3bdbcdc4bf6bde689ddffcf5b659b981}{error\+\_\+codes}} \mbox{\hyperlink{classhfl_1_1CameraCommander_a9c1ec30883be38f73e1d486fe50efe58}{check\+For\+Error}} ()
+\item 
+bool \mbox{\hyperlink{classhfl_1_1CameraCommander_a739141547c5f9e601709ae8b155e06b6}{fix\+Error}} (\mbox{\hyperlink{camera__commander_8h_a3bdbcdc4bf6bde689ddffcf5b659b981}{error\+\_\+codes}} error)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a5980180190e95fb8822c1cb270efbe90}\label{classhfl_1_1CameraCommander_a5980180190e95fb8822c1cb270efbe90}} 
+ros\+::\+Node\+Handle \mbox{\hyperlink{classhfl_1_1CameraCommander_a5980180190e95fb8822c1cb270efbe90}{node\+\_\+handler\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Node Handle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a5e9bc97549b22c06590a53d7163e27ee}\label{classhfl_1_1CameraCommander_a5e9bc97549b22c06590a53d7163e27ee}} 
+std\+::string \mbox{\hyperlink{classhfl_1_1CameraCommander_a5e9bc97549b22c06590a53d7163e27ee}{namespace\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Namespace. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a0acbae7c9dbe3b56b76700369f6f2415}\label{classhfl_1_1CameraCommander_a0acbae7c9dbe3b56b76700369f6f2415}} 
+ros\+::\+Subscriber \mbox{\hyperlink{classhfl_1_1CameraCommander_a0acbae7c9dbe3b56b76700369f6f2415}{frame\+\_\+data\+\_\+subscriber\+\_\+}}
+\begin{DoxyCompactList}\small\item\em U\+DP Frame Data subscriber. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_aa975c3c3cb6805493c52918d1efc2e6e}\label{classhfl_1_1CameraCommander_aa975c3c3cb6805493c52918d1efc2e6e}} 
+ros\+::\+Subscriber \mbox{\hyperlink{classhfl_1_1CameraCommander_aa975c3c3cb6805493c52918d1efc2e6e}{object\+\_\+data\+\_\+subscriber\+\_\+}}
+\begin{DoxyCompactList}\small\item\em U\+DP Object Data Subscriber. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a19ddca0c90aa9318a2adf768db86bf30}\label{classhfl_1_1CameraCommander_a19ddca0c90aa9318a2adf768db86bf30}} 
+ros\+::\+Subscriber \mbox{\hyperlink{classhfl_1_1CameraCommander_a19ddca0c90aa9318a2adf768db86bf30}{lut\+\_\+data\+\_\+subscriber\+\_\+}}
+\begin{DoxyCompactList}\small\item\em U\+DP L\+UT Data Subscriber. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_aca6ef4a774f59cef7efbeca78804fa0e}\label{classhfl_1_1CameraCommander_aca6ef4a774f59cef7efbeca78804fa0e}} 
+ros\+::\+Service\+Client \mbox{\hyperlink{classhfl_1_1CameraCommander_aca6ef4a774f59cef7efbeca78804fa0e}{udp\+\_\+send\+\_\+service\+\_\+client\+\_\+}}
+\begin{DoxyCompactList}\small\item\em U\+DP send service client. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a16dc4be4a1d88672d40d114206feb304}\label{classhfl_1_1CameraCommander_a16dc4be4a1d88672d40d114206feb304}} 
+ros\+::\+Service\+Client \mbox{\hyperlink{classhfl_1_1CameraCommander_a16dc4be4a1d88672d40d114206feb304}{udp\+\_\+socket\+\_\+creation\+\_\+service\+\_\+client\+\_\+}}
+\begin{DoxyCompactList}\small\item\em U\+DP socket service client. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_afa6fe3776f19191d58ec48d96eb66854}\label{classhfl_1_1CameraCommander_afa6fe3776f19191d58ec48d96eb66854}} 
+std\+::shared\+\_\+ptr$<$ dynamic\+\_\+reconfigure\+::\+Server$<$ hfl\+\_\+driver\+::\+H\+F\+L\+Config $>$ $>$ \mbox{\hyperlink{classhfl_1_1CameraCommander_afa6fe3776f19191d58ec48d96eb66854}{dynamic\+\_\+parameters\+\_\+server\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Dynamic Reconfigure server. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a8d8263987aefc5b0126aeccd05e4d43b}\label{classhfl_1_1CameraCommander_a8d8263987aefc5b0126aeccd05e4d43b}} 
+ros\+::\+Timer \mbox{\hyperlink{classhfl_1_1CameraCommander_a8d8263987aefc5b0126aeccd05e4d43b}{timer\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Status checker timer. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a4e088039bea4f2b2bc8868300c70fe24}\label{classhfl_1_1CameraCommander_a4e088039bea4f2b2bc8868300c70fe24}} 
+\mbox{\hyperlink{camera__commander_8h_a71143b37336a4b82276f171f21f3341b}{commander\+\_\+states}} \mbox{\hyperlink{classhfl_1_1CameraCommander_a4e088039bea4f2b2bc8868300c70fe24}{current\+\_\+state\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Commander current state. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a2d734dab04da41a0aaff1ffd573252e7}\label{classhfl_1_1CameraCommander_a2d734dab04da41a0aaff1ffd573252e7}} 
+\mbox{\hyperlink{camera__commander_8h_a71143b37336a4b82276f171f21f3341b}{commander\+\_\+states}} \mbox{\hyperlink{classhfl_1_1CameraCommander_a2d734dab04da41a0aaff1ffd573252e7}{previous\+\_\+state\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Commander Previous state prior to error. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a9aa397c247586647a68abc384b72a90a}\label{classhfl_1_1CameraCommander_a9aa397c247586647a68abc384b72a90a}} 
+\mbox{\hyperlink{camera__commander_8h_a3bdbcdc4bf6bde689ddffcf5b659b981}{error\+\_\+codes}} \mbox{\hyperlink{classhfl_1_1CameraCommander_a9aa397c247586647a68abc384b72a90a}{error\+\_\+status\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Error Status. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_abf7e468462c296f906a819a622cab480}\label{classhfl_1_1CameraCommander_abf7e468462c296f906a819a622cab480}} 
+std\+::string \mbox{\hyperlink{classhfl_1_1CameraCommander_abf7e468462c296f906a819a622cab480}{ethernet\+\_\+interface\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Ethernet Interface. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a6413afc1f3712af4a36b0d49b66b4b16}\label{classhfl_1_1CameraCommander_a6413afc1f3712af4a36b0d49b66b4b16}} 
+std\+::string \mbox{\hyperlink{classhfl_1_1CameraCommander_a6413afc1f3712af4a36b0d49b66b4b16}{camera\+\_\+address\+\_\+}}
+\begin{DoxyCompactList}\small\item\em IP Address of sensor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a12bb3e709bf400b325989a5eefd7b27d}\label{classhfl_1_1CameraCommander_a12bb3e709bf400b325989a5eefd7b27d}} 
+std\+::string \mbox{\hyperlink{classhfl_1_1CameraCommander_a12bb3e709bf400b325989a5eefd7b27d}{computer\+\_\+address\+\_\+}}
+\begin{DoxyCompactList}\small\item\em IP Address of computer. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_aacb364316530593c8e872d6f30ce54da}\label{classhfl_1_1CameraCommander_aacb364316530593c8e872d6f30ce54da}} 
+int \mbox{\hyperlink{classhfl_1_1CameraCommander_aacb364316530593c8e872d6f30ce54da}{frame\+\_\+data\+\_\+port\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Frame Data U\+DP port. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a2ba02e97262ed869b6001d4e09f6079e}\label{classhfl_1_1CameraCommander_a2ba02e97262ed869b6001d4e09f6079e}} 
+std\+::shared\+\_\+ptr$<$ hfl\+::\+Hfl\+Interface $>$ \mbox{\hyperlink{classhfl_1_1CameraCommander_a2ba02e97262ed869b6001d4e09f6079e}{flash\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Pointer to Flash camera. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implements the camera configuration and setup. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_acee92c61f13bfb39373314b39c87b1dc}\label{classhfl_1_1CameraCommander_acee92c61f13bfb39373314b39c87b1dc}} 
+\index{hfl::CameraCommander@{hfl::CameraCommander}!CameraCommander@{CameraCommander}}
+\index{CameraCommander@{CameraCommander}!hfl::CameraCommander@{hfl::CameraCommander}}
+\doxysubsubsection{\texorpdfstring{CameraCommander()}{CameraCommander()}}
+{\footnotesize\ttfamily hfl\+::\+Camera\+Commander\+::\+Camera\+Commander (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{classhfl_1_1CameraCommander}{Camera\+Commander}} constructor Initialize default variables here\mbox{\Hypertarget{classhfl_1_1CameraCommander_a78c4812741f148326e0068ebef616b2b}\label{classhfl_1_1CameraCommander_a78c4812741f148326e0068ebef616b2b}} 
+\index{hfl::CameraCommander@{hfl::CameraCommander}!````~CameraCommander@{$\sim$CameraCommander}}
+\index{````~CameraCommander@{$\sim$CameraCommander}!hfl::CameraCommander@{hfl::CameraCommander}}
+\doxysubsubsection{\texorpdfstring{$\sim$CameraCommander()}{~CameraCommander()}}
+{\footnotesize\ttfamily hfl\+::\+Camera\+Commander\+::$\sim$\+Camera\+Commander (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{classhfl_1_1CameraCommander}{Camera\+Commander}} destructor 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a9c1ec30883be38f73e1d486fe50efe58}\label{classhfl_1_1CameraCommander_a9c1ec30883be38f73e1d486fe50efe58}} 
+\index{hfl::CameraCommander@{hfl::CameraCommander}!checkForError@{checkForError}}
+\index{checkForError@{checkForError}!hfl::CameraCommander@{hfl::CameraCommander}}
+\doxysubsubsection{\texorpdfstring{checkForError()}{checkForError()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{camera__commander_8h_a3bdbcdc4bf6bde689ddffcf5b659b981}{error\+\_\+codes}} hfl\+::\+Camera\+Commander\+::check\+For\+Error (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Checks for Errors and returns the designated error code \mbox{\Hypertarget{classhfl_1_1CameraCommander_a260172fb640535e99d6f163fd745dfef}\label{classhfl_1_1CameraCommander_a260172fb640535e99d6f163fd745dfef}} 
+\index{hfl::CameraCommander@{hfl::CameraCommander}!createSocket@{createSocket}}
+\index{createSocket@{createSocket}!hfl::CameraCommander@{hfl::CameraCommander}}
+\doxysubsubsection{\texorpdfstring{createSocket()}{createSocket()}}
+{\footnotesize\ttfamily bool hfl\+::\+Camera\+Commander\+::create\+Socket (\begin{DoxyParamCaption}\item[{std\+::string}]{computer\+Addr,  }\item[{std\+::string}]{camera\+Addr,  }\item[{uint16\+\_\+t}]{port,  }\item[{bool}]{is\+Multicast }\end{DoxyParamCaption})}
+
+Create Socket Request Function
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em computer\+Addr} & Computer\textquotesingle{}s IP Address \\
+\hline
+\mbox{\texttt{ in}}  & {\em camera\+Addr} & Camera\textquotesingle{}s IP Address \\
+\hline
+\mbox{\texttt{ in}}  & {\em port} & U\+DP port number \\
+\hline
+\mbox{\texttt{ in}}  & {\em is\+Multicast} & describes if the connection is multicast \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool true if socket created 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a590e478d771d64f2ead1352805084cd1}\label{classhfl_1_1CameraCommander_a590e478d771d64f2ead1352805084cd1}} 
+\index{hfl::CameraCommander@{hfl::CameraCommander}!dynamicPametersCallback@{dynamicPametersCallback}}
+\index{dynamicPametersCallback@{dynamicPametersCallback}!hfl::CameraCommander@{hfl::CameraCommander}}
+\doxysubsubsection{\texorpdfstring{dynamicPametersCallback()}{dynamicPametersCallback()}}
+{\footnotesize\ttfamily void hfl\+::\+Camera\+Commander\+::dynamic\+Pameters\+Callback (\begin{DoxyParamCaption}\item[{hfl\+\_\+driver\+::\+H\+F\+L\+Config \&}]{config,  }\item[{uint32\+\_\+t}]{level }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Uses the dynamic reconfigure service binded callback dynamic parameter configuration.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em config} & parameters data \\
+\hline
+\mbox{\texttt{ in}}  & {\em level} & priority\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a739141547c5f9e601709ae8b155e06b6}\label{classhfl_1_1CameraCommander_a739141547c5f9e601709ae8b155e06b6}} 
+\index{hfl::CameraCommander@{hfl::CameraCommander}!fixError@{fixError}}
+\index{fixError@{fixError}!hfl::CameraCommander@{hfl::CameraCommander}}
+\doxysubsubsection{\texorpdfstring{fixError()}{fixError()}}
+{\footnotesize\ttfamily bool hfl\+::\+Camera\+Commander\+::fix\+Error (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{camera__commander_8h_a3bdbcdc4bf6bde689ddffcf5b659b981}{error\+\_\+codes}}}]{error }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Fixes the error corresponding to the error code Returns true if error fixed, false otherwise \begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a2b3abf68e33b5118a856f3382a4d60c5}\label{classhfl_1_1CameraCommander_a2b3abf68e33b5118a856f3382a4d60c5}} 
+\index{hfl::CameraCommander@{hfl::CameraCommander}!frameDataCallback@{frameDataCallback}}
+\index{frameDataCallback@{frameDataCallback}!hfl::CameraCommander@{hfl::CameraCommander}}
+\doxysubsubsection{\texorpdfstring{frameDataCallback()}{frameDataCallback()}}
+{\footnotesize\ttfamily void hfl\+::\+Camera\+Commander\+::frame\+Data\+Callback (\begin{DoxyParamCaption}\item[{const udp\+\_\+com\+::\+Udp\+Packet \&}]{udp\+\_\+packet }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Callback for U\+DP frame data packets.
+
+Receives the frame data messages for parsing through IP addresses validation.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em udp\+\_\+packet} & U\+DP packet message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a9374685e89e2fc6dd54dad806e31c3ee}\label{classhfl_1_1CameraCommander_a9374685e89e2fc6dd54dad806e31c3ee}} 
+\index{hfl::CameraCommander@{hfl::CameraCommander}!lutDataCallback@{lutDataCallback}}
+\index{lutDataCallback@{lutDataCallback}!hfl::CameraCommander@{hfl::CameraCommander}}
+\doxysubsubsection{\texorpdfstring{lutDataCallback()}{lutDataCallback()}}
+{\footnotesize\ttfamily void hfl\+::\+Camera\+Commander\+::lut\+Data\+Callback (\begin{DoxyParamCaption}\item[{const udp\+\_\+com\+::\+Udp\+Packet \&}]{udp\+\_\+packet }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Callback for U\+DP L\+UT data packets
+
+Receives the lut data messages for parsing through IP addresses validation
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em udp\+\_\+packet} & U\+DP packet message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_abb45b8570e98137f0b6b1a3c23ad84c9}\label{classhfl_1_1CameraCommander_abb45b8570e98137f0b6b1a3c23ad84c9}} 
+\index{hfl::CameraCommander@{hfl::CameraCommander}!objectDataCallback@{objectDataCallback}}
+\index{objectDataCallback@{objectDataCallback}!hfl::CameraCommander@{hfl::CameraCommander}}
+\doxysubsubsection{\texorpdfstring{objectDataCallback()}{objectDataCallback()}}
+{\footnotesize\ttfamily void hfl\+::\+Camera\+Commander\+::object\+Data\+Callback (\begin{DoxyParamCaption}\item[{const udp\+\_\+com\+::\+Udp\+Packet \&}]{udp\+\_\+packet }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Callback for U\+DP object data packets
+
+Receives the object data messages for parsing through IP addresses validation
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em udp\+\_\+packet} & U\+DP packet message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a4e8253b5e988f56f9e376697bb2597fc}\label{classhfl_1_1CameraCommander_a4e8253b5e988f56f9e376697bb2597fc}} 
+\index{hfl::CameraCommander@{hfl::CameraCommander}!onInit@{onInit}}
+\index{onInit@{onInit}!hfl::CameraCommander@{hfl::CameraCommander}}
+\doxysubsubsection{\texorpdfstring{onInit()}{onInit()}}
+{\footnotesize\ttfamily void hfl\+::\+Camera\+Commander\+::on\+Init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Initialize Nodelet member variables
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_abcc632d70a30cfd0c5155158b6c2839d}\label{classhfl_1_1CameraCommander_abcc632d70a30cfd0c5155158b6c2839d}} 
+\index{hfl::CameraCommander@{hfl::CameraCommander}!sendCommand@{sendCommand}}
+\index{sendCommand@{sendCommand}!hfl::CameraCommander@{hfl::CameraCommander}}
+\doxysubsubsection{\texorpdfstring{sendCommand()}{sendCommand()}}
+{\footnotesize\ttfamily bool hfl\+::\+Camera\+Commander\+::send\+Command (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ uint8\+\_\+t $>$ \&}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Uses the udp\+\_\+com service binded send function for command sending
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em data} & Data array to be sent\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool true if command sent succed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_acfd395fe2df6a8aa9e05da0b0cb01de6}\label{classhfl_1_1CameraCommander_acfd395fe2df6a8aa9e05da0b0cb01de6}} 
+\index{hfl::CameraCommander@{hfl::CameraCommander}!setCommanderState@{setCommanderState}}
+\index{setCommanderState@{setCommanderState}!hfl::CameraCommander@{hfl::CameraCommander}}
+\doxysubsubsection{\texorpdfstring{setCommanderState()}{setCommanderState()}}
+{\footnotesize\ttfamily void hfl\+::\+Camera\+Commander\+::set\+Commander\+State (\begin{DoxyParamCaption}\item[{const ros\+::\+Timer\+Event \&}]{timer\+\_\+event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Sets \mbox{\hyperlink{classhfl_1_1CameraCommander}{Camera\+Commander}} current state
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em timer\+\_\+event} & R\+OS Timer\+Event object\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a1331d6ddd28ef2d3acc5ee8cef578817}\label{classhfl_1_1CameraCommander_a1331d6ddd28ef2d3acc5ee8cef578817}} 
+\index{hfl::CameraCommander@{hfl::CameraCommander}!setFlash@{setFlash}}
+\index{setFlash@{setFlash}!hfl::CameraCommander@{hfl::CameraCommander}}
+\doxysubsubsection{\texorpdfstring{setFlash()}{setFlash()}}
+{\footnotesize\ttfamily bool hfl\+::\+Camera\+Commander\+::set\+Flash (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Loads the H\+FL camera instace accordingly to the launch parameters
+
+\begin{DoxyReturn}{Returns}
+bool true if flash loading succed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classhfl_1_1CameraCommander_a4eff414ee628f97bbb6b1aa1272adeca}\label{classhfl_1_1CameraCommander_a4eff414ee628f97bbb6b1aa1272adeca}} 
+\index{hfl::CameraCommander@{hfl::CameraCommander}!udpInit@{udpInit}}
+\index{udpInit@{udpInit}!hfl::CameraCommander@{hfl::CameraCommander}}
+\doxysubsubsection{\texorpdfstring{udpInit()}{udpInit()}}
+{\footnotesize\ttfamily bool hfl\+::\+Camera\+Commander\+::udp\+Init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Initialize U\+DP topics and services
+
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/camera\+\_\+commander/\mbox{\hyperlink{camera__commander_8h}{camera\+\_\+commander.\+h}}\item 
+src/camera\+\_\+commander/\mbox{\hyperlink{camera__commander_8cpp}{camera\+\_\+commander.\+cpp}}\end{DoxyCompactItemize}

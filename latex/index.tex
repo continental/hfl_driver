@@ -1,0 +1,89 @@
+\label{index_md_README}%
+\Hypertarget{index_md_README}%
+This package was designed to be a \href{https://index.ros.org/about/}{\texttt{ Robotic Operating System (R\+OS)}} driver for Continental\textquotesingle{}s 3D Flash Lidar products.
+
+{\bfseries{Supported platforms/releases}}\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Platform }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ R\+OS Release  }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Platform }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ R\+OS Release  }\\\cline{1-2}
+\endhead
+\href{http://releases.ubuntu.com/18.04.4/}{\texttt{ Ubuntu 18.\+04 Bionic}} &\href{http://wiki.ros.org/melodic/Installation/Ubuntu}{\texttt{ R\+OS Melodic}}  \\\cline{1-2}
+\end{longtabu}
+
+
+{\bfseries{License}}\+: Apache License 2.\+0
+
+Please \mbox{[}review the source code documentation\mbox{]}() for more details on how the project is structured.
+
+\doxysection*{Getting Started}
+
+
+\begin{DoxyEnumerate}
+\item First, make sure your system is supported and already has R\+OS installed (see table above)
+\item Go ahead and clone this repository into your {\ttfamily catkin\+\_\+ws}. Read up on {\ttfamily catkin\+\_\+ws} by \mbox{[}following this tutorial(\href{http://wiki.ros.org/catkin/Tutorials/create_a_workspace}{\texttt{ http\+://wiki.\+ros.\+org/catkin/\+Tutorials/create\+\_\+a\+\_\+workspace}}).
+\item Within your {\ttfamily catkin\+\_\+ws} directory, go ahead and compile the code\+:
+\begin{DoxyEnumerate}
+\item {\ttfamily catkin\+\_\+make}
+\item {\bfseries{you may have to run \href{https://www.poftut.com/how-to-install-and-use-dos2unix-command-in-linux/}{\texttt{ dos2unix}} on the {\ttfamily hfl\+\_\+driver/cfg/\+H\+F\+L.\+cfg} file in order to get it to compile}}
+\end{DoxyEnumerate}
+\item After a successful compile, add the new H\+FL R\+OS packages to your environment\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{echo "source <path/to/your/catkin\_ws>/devel/setup.bash" >> \string~/.bashrc}
+\DoxyCodeLine{source \string~/.bashrc}
+\end{DoxyCode}
+
+\item In two separate terminals, run the following commands\+:
+\begin{DoxyEnumerate}
+\item {\ttfamily roscore}
+\item {\ttfamily roslaunch hfl\+\_\+driver hfl110dcu.\+launch}
+\end{DoxyEnumerate}
+\end{DoxyEnumerate}
+
+\href{http://wiki.ros.org/roslaunch/XML/arg}{\texttt{ Parameters}} for hfl\+\_\+driver launch file
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Parameter }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Default Values  }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Parameter }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Description }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Default Values  }\\\cline{1-3}
+\endhead
+camera\+\_\+model &H\+FL Model to launch &\PBS\centering hfl110dcu  \\\cline{1-3}
+camera\+\_\+version &H\+FL Firmware version &\PBS\centering v1  \\\cline{1-3}
+camera\+\_\+ip\+\_\+address &H\+FL IP address (I\+Pv4) &\PBS\centering 192.\+168.\+10.\+21  \\\cline{1-3}
+frame\+\_\+data\+\_\+port &H\+FL P\+CA Port &\PBS\centering 1900  \\\cline{1-3}
+computer\+\_\+ip\+\_\+address &Computer I\+Pv4 Address &\PBS\centering 192.\+168.\+10.\+5  \\\cline{1-3}
+\end{longtabu}
+
+
+{\bfseries{T\+IP}}\+: check a launch files arguments before calling roslaunch to confirm you are passing the correct parameters. Use \href{https://www.wireshark.org/}{\texttt{ wireshark}} or another network tool to see if you are receiving packets.
+
+Be sure to check the documentation website for more information.
+
+\doxysection*{C\+PP static code analysis}
+
+R\+OS also comes with static code analysis support, therefore in order to run it for the hfl\+\_\+driver package, type\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{catkin\_make run\_tests roslint\_<name\_of\_ros\_package>}
+\end{DoxyCode}
+
+
+Where in this case you would put hfl\+\_\+driver or udp\+\_\+com in for $<$name\+\_\+of\+\_\+ros\+\_\+package$>$. This will output the errors and warnings on console. If more info is required see \href{http://wiki.ros.org/roslint}{\texttt{ this}}.
+
+\doxysubsection*{Authors}
+
+Many have contributed to this project beyond just the people listed here. Thank you to those who have answered any questions, emails or supported the project in other ways. Without you none of this would have been possible.
+\begin{DoxyItemize}
+\item Gerardo Bravo
+\item Evan Flynn 
+\end{DoxyItemize}
