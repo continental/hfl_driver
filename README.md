@@ -9,7 +9,7 @@ This package was designed to be a [Robotic Operating System (ROS)](https://index
 
 **License**: BSD Two Clause License
 
-Please [review the source code documentation]() for more details on how the project is structured.
+Please [review the source code documentation](https://continental.github.io/hfl_driver/html/index.html) for more details on how the project is structured.
 
 ## Getting Started
 1. First, make sure your system is supported and already has ROS installed (see table above)
@@ -33,7 +33,7 @@ source ~/.bashrc
 | camera_model        | HFL Model to launch   | hfl110dcu             |
 | camera_version      | HFL Firmware version  | v1                    |
 | camera_ip_address   | HFL IP address (IPv4) | 192.168.10.21         |
-| frame_data_port     | HFL PCA Port          | 1900                  |
+| frame_data_port     | HFL PCA Port          | 57410                 |
 | computer_ip_address | Computer IPv4 Address | 192.168.10.5          |
 
 **TIP**: check a launch files arguments before calling roslaunch to confirm you are passing the correct parameters. Use [wireshark](https://www.wireshark.org/) or another network tool to see if you are receiving packets.

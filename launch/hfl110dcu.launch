@@ -6,7 +6,7 @@
   <arg name="camera_frame_id" default="$(arg camera_model)_01" />
   <arg name="parent_frame_id" default="map" />
   <arg name="camera_ip_address" default="192.168.10.21" />
-  <arg name="frame_data_port" default="1900" />
+  <arg name="frame_data_port" default="57410" />
   <arg name="computer_ip_address" default="192.168.10.5" />
 
   <!-- Node Manager Arguments -->
