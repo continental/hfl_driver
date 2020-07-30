@@ -1,5 +1,0 @@
-<map id="include/image_processor/hfl110dcu.h" name="include/image_processor/hfl110dcu.h">
-<area shape="rect" id="node1" title="This file defines the HFL110DCU image processor class." alt="" coords="95,5,262,47"/>
-<area shape="rect" id="node2" href="$camera__commander_8cpp.html" title="This file implements the CameraCommander class methods." alt="" coords="5,95,173,136"/>
-<area shape="rect" id="node3" href="$hfl110dcu_8cpp.html" title="This file implements the hfl110dcu image processor class methods." alt="" coords="198,95,341,136"/>
-</map>
