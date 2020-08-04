@@ -6,17 +6,15 @@ on:
       - package.xml
       - 'package.xml'
     branches:
-      - ros1-devel
-
+      - ros1/main
 jobs:
   bloom-release:
     runs-on: ubuntu-latest
-    
     steps:
     - name: checkout repo
       uses: actions/checkout@v2
     - name: bloom_release
-      uses: at-wat/bloom-release-action@v0.0.8
+      uses: at-wat/bloom-release-action@v0
       with:
         ros_distro: kinetic melodic noetic
         release_repository_push_url: https://github.com/flynneva/udp_com-release.git
@@ -25,7 +23,8 @@ jobs:
         git_user: Evan Flynn
         git_email: evanflynn.msu@gmail.com
         tag_and_release: true
-    - name: create release
+        #open_pr: true
+    - name: create github release
       uses: actions/create-release@v1
       with:
         tag_name: ${{ steps.bloom_release.outputs.version }}
