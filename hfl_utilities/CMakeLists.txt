@@ -28,6 +28,8 @@ target_include_directories(${PROJECT_NAME}
 )
 
 ## Mark executables and/or libraries for installation
-install(TARGETS ${PROJECT_NAME}
+install(
+  TARGETS ${PROJECT_NAME}
+  ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
 )
