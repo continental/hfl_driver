@@ -118,6 +118,7 @@ generate_dynamic_reconfigure_options(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES hfl_utilities
+  DEPENDS arpa
   CATKIN_DEPENDS 
   roscpp 
   rospy 
@@ -126,7 +127,6 @@ catkin_package(
   angles
   tf2
   tf2_geometry_msgs
-  arpa
   image_transport
   camera_info_manager
   message_generation
@@ -180,7 +180,7 @@ roslint_cpp()
 
 if(CATKIN_ENABLE_TESTING)
   # Add rostest gtest
-  add_rostest_gtest(tests_hfl110dcu
+  catkin_add_gtest(tests_hfl110dcu
     test/hfl110dcu.test 
     test/hfl110dcu-test.cpp
     test/hfl110dcu-utils-test.cpp
