@@ -1,9 +1,6 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.5.1)
 
-project(hfl_utilities
-  VERSION 1.0.0
-  DESCRIPTION "HFL utilities cpp library"
-)
+project(hfl_utilities)
 
 ###########
 ## Build ##
