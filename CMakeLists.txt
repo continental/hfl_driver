@@ -118,7 +118,6 @@ generate_dynamic_reconfigure_options(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES hfl_utilities
-  DEPENDS arpa
   CATKIN_DEPENDS 
   roscpp 
   rospy 
@@ -179,8 +178,9 @@ target_link_libraries(${PROJECT_NAME}
 roslint_cpp()
 
 if(CATKIN_ENABLE_TESTING)
+  find_package(rostest REQUIRED)
   # Add rostest gtest
-  catkin_add_gtest(tests_hfl110dcu
+  add_rostest_gtest(tests_hfl110dcu
     test/hfl110dcu.test 
     test/hfl110dcu-test.cpp
     test/hfl110dcu-utils-test.cpp
