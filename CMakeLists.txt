@@ -174,11 +174,11 @@ target_link_libraries(${PROJECT_NAME}
 ## Testing ##
 #############
 
-# ROS linter
-roslint_cpp()
-
 if(CATKIN_ENABLE_TESTING)
+  find_package(roslint REQUIRED)
   find_package(rostest REQUIRED)
+  # ROS linter
+  roslint_cpp()
   # Add rostest gtest
   add_rostest_gtest(tests_hfl110dcu
     test/hfl110dcu.test 
