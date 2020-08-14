@@ -26,7 +26,6 @@
   <build_depend>angles</build_depend>
   <build_depend>tf2</build_depend>
   <build_depend>tf2_geometry_msgs</build_depend>
-  <build_depend>arpa</build_depend>
   <build_depend>camera_info_manager</build_depend>
   <build_depend>udp_com</build_depend>
   <build_depend>image_transport</build_depend>
@@ -45,7 +44,6 @@
   <exec_depend>angles</exec_depend>
   <exec_depend>tf2</exec_depend>
   <exec_depend>tf2_geometry_msgs</exec_depend>
-  <exec_depend>arpa</exec_depend>
   <exec_depend>camera_info_manager</exec_depend>
   <exec_depend>image_transport</exec_depend>
   <exec_depend>cv_bridge</exec_depend>
@@ -64,7 +62,6 @@
   <build_export_depend>angles</build_export_depend>
   <build_export_depend>tf2</build_export_depend>
   <build_export_depend>tf2_geometry_msgs</build_export_depend>
-  <build_export_depend>arpa</build_export_depend>
   <build_export_depend>camera_info_manager</build_export_depend>
   <build_export_depend>udp_com</build_export_depend>
   <build_export_depend>image_transport</build_export_depend>
