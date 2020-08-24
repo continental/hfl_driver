@@ -22,7 +22,6 @@
   <build_depend>std_msgs</build_depend>
   <build_depend>visualization_msgs</build_depend>
   <build_depend>sensor_msgs</build_depend>
-  <build_depend>cmath</build_depend>
   <build_depend>angles</build_depend>
   <build_depend>tf2</build_depend>
   <build_depend>tf2_geometry_msgs</build_depend>
@@ -39,7 +38,6 @@
   <exec_depend>visualization_msgs</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
-  <exec_depend>cmath</exec_depend>
   <exec_depend>angles</exec_depend>
   <exec_depend>tf2</exec_depend>
   <exec_depend>tf2_geometry_msgs</exec_depend>
@@ -57,7 +55,6 @@
   <build_export_depend>visualization_msgs</build_export_depend>
   <build_export_depend>sensor_msgs</build_export_depend>
   <build_export_depend>geometry_msgs</build_export_depend>
-  <build_export_depend>cmath</build_export_depend>
   <build_export_depend>angles</build_export_depend>
   <build_export_depend>tf2</build_export_depend>
   <build_export_depend>tf2_geometry_msgs</build_export_depend>
