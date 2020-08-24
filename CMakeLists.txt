@@ -23,6 +23,7 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   camera_info_manager
   cv_bridge
+  udp_com
 )
 
 ## System dependencies are found with CMake's conventions
@@ -167,7 +168,6 @@ add_dependencies(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
   ${catkin_LIBRARIES}
   hfl_utilities
-  udp_com
 )
 
 #############
