@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>hfl_driver</name>
-  <version>0.0.16</version>
+  <version>0.0.17</version>
 
   <description>The hfl package</description>
 
@@ -32,6 +32,7 @@
   <build_depend>image_transport</build_depend>
   <build_depend>cv_bridge</build_depend>
   <build_depend>message_generation</build_depend>
+  <build_depend>dynamic_reconfigure</build_depend>
 
   <exec_depend>nodelet</exec_depend>
   <exec_depend>roscpp</exec_depend>
@@ -50,6 +51,7 @@
   <exec_depend>message_generation</exec_depend>
   <exec_depend>message_runtime</exec_depend>
   <exec_depend>dynamic_reconfigure</exec_depend>
+	
 
   <build_export_depend>nodelet</build_export_depend> 
   <build_export_depend>roscpp</build_export_depend>
@@ -66,6 +68,7 @@
   <build_export_depend>udp_com</build_export_depend>
   <build_export_depend>image_transport</build_export_depend>
   <build_export_depend>cv_bridge</build_export_depend>
+  <build_export_depend>dynamic_reconfigure</build_export_depend>
 
   <test_depend>rostest</test_depend>
   <test_depend>roslint</test_depend>
