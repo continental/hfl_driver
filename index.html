@@ -68,16 +68,21 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README"></a>This package was designed to be a <a href="https://index.ros.org/about/">Robotic Operating System (ROS)</a> driver for Continental's 3D Flash Lidar products.</p>
-<p><b>Supported platforms/releases</b>:</p>
-<table class="markdownTable">
+<p><b>Supported platforms/releases</b>: </p><table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Platform  </th><th class="markdownTableHeadNone">ROS Release   </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><a href="http://releases.ubuntu.com/18.04.4/">Ubuntu 18.04 Bionic</a>  </td><td class="markdownTableBodyNone"><a href="http://wiki.ros.org/melodic/Installation/Ubuntu">ROS Melodic</a>   </td></tr>
+<td class="markdownTableBodyNone"><a href="https://releases.ubuntu.com/16.04.4/">Ubuntu 16.04 Bionic</a>  </td><td class="markdownTableBodyNone"><a href="https://wiki.ros.org/kinetic/Installation/Ubuntu">ROS Kinetic</a>   </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a href="https://releases.ubuntu.com/18.04/">Ubuntu 18.04 Bionic</a>  </td><td class="markdownTableBodyNone"><a href="https://wiki.ros.org/melodic/Installation/Ubuntu">ROS Melodic</a>   </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="https://releases.ubuntu.com/20.04/">Ubuntu 20.04 Bionic</a>  </td><td class="markdownTableBodyNone"><a href="https://wiki.ros.org/noetic/Installation/Ubuntu">ROS Noetic</a>   </td></tr>
 </table>
 <p><b>License</b>: BSD Two Clause License</p>
 <p>Please <a href="https://continental.github.io/hfl_driver/html/index.html">review the source code documentation</a> for more details on how the project is structured.</p>
-<h1>Getting Started</h1>
+<h2>Quickstart</h2>
+<p>[WIP] Install like any other ROS package: </p><div class="fragment"><div class="line">sudo apt install ros-&lt;ros-distro&gt;-hfl-driver</div>
+</div><!-- fragment --><h2>Getting Started</h2>
 <ol type="1">
 <li>First, make sure your system is supported and already has ROS installed (see table above)</li>
 <li>Go ahead and clone this repository into your <code>catkin_ws</code>. Read up on <code>catkin_ws</code> by [following this tutorial(<a href="http://wiki.ros.org/catkin/Tutorials/create_a_workspace">http://wiki.ros.org/catkin/Tutorials/create_a_workspace</a>).</li>
