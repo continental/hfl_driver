@@ -2,16 +2,24 @@
 This package was designed to be a [Robotic Operating System (ROS)](https://index.ros.org/about/) driver for Continental's 3D Flash Lidar products.
 
 **Supported platforms/releases**:
-
 | Platform                                                   | ROS Release                                                    |
 | ---------------------------------------------------------- | -------------------------------------------------------------- |
-| [Ubuntu 18.04 Bionic](http://releases.ubuntu.com/18.04.4/) | [ROS Melodic](http://wiki.ros.org/melodic/Installation/Ubuntu) |
+| [Ubuntu 16.04 Bionic](https://releases.ubuntu.com/16.04.4/) | [ROS Kinetic](https://wiki.ros.org/kinetic/Installation/Ubuntu) |
+| [Ubuntu 18.04 Bionic](https://releases.ubuntu.com/18.04/) | [ROS Melodic](https://wiki.ros.org/melodic/Installation/Ubuntu) |
+| [Ubuntu 20.04 Bionic](https://releases.ubuntu.com/20.04/) | [ROS Noetic](https://wiki.ros.org/noetic/Installation/Ubuntu) |
 
 **License**: BSD Two Clause License
 
 Please [review the source code documentation](https://continental.github.io/hfl_driver/html/index.html) for more details on how the project is structured.
 
-## Getting Started
+### Quickstart
+
+[WIP] Install like any other ROS package:
+```
+sudo apt install ros-<ros-distro>-hfl-driver
+```
+
+### Getting Started
 1. First, make sure your system is supported and already has ROS installed (see table above)
 2. Go ahead and clone this repository into your `catkin_ws`. Read up on `catkin_ws` by [following this tutorial(http://wiki.ros.org/catkin/Tutorials/create_a_workspace).
 3. Within your `catkin_ws` directory, go ahead and compile the code:

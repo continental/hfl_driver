@@ -12,7 +12,6 @@ add_subdirectory(hfl_utilities)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roslint
   tf
   dynamic_reconfigure
   nodelet
@@ -23,6 +22,7 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   camera_info_manager
   cv_bridge
+  udp_com
 )
 
 ## System dependencies are found with CMake's conventions
@@ -167,7 +167,6 @@ add_dependencies(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
   ${catkin_LIBRARIES}
   hfl_utilities
-  udp_com
 )
 
 #############
@@ -230,56 +229,3 @@ install(FILES
   nodelets.xml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
-#configuration files
-install(FILES
-  cfg/camera_commander.yaml
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/cfg/
-)
-
-#extrinsics parameters
-install(FILES
-  params/extrinsics/left.yaml
-  params/extrinsics/right.yaml
-  params/extrinsics/rear.yaml
-  params/extrinsics/front.yaml
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/params/extrinsics
-)
-
-## Add folders to be run by python nosetests
-# catkin_add_nosetests(test)
-
-####################
-## Deb Generation ##
-####################
-
-set(CPACK_GENERATOR "DEB")
-
-#Creating UNIX structured package
-set(CPACK_CMAKE_GENERATOR "Unix Makefiles")
-set(CPACK_PACKAGE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/dist")
-set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
-
-#Set directory to /../ to avoid /share part of ROS_PACKAGE_PATH
-set(CPACK_PACKAGING_INSTALL_PREFIX "$ENV{ROS_PACKAGE_PATH}/../")
-set(CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_CURRENT_BINARY_DIR};${PROJECT_NAME};ALL;/./")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY
-    "${PROJECT_DESCRIPTION}")
-set(CPACK_PACKAGE_NAME "${PROJECT_NAME}")
-set(CPACK_PACKAGE_VENDOR "RCS")
-
-#Now we can simply create the dependencies using almost the same package names as they declared in ROS repository
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "ros-melodic-roscpp, ros-melodic-std-msgs, ros-melodic-message-runtime, ros-melodic-sensor-msgs")
-
-#IMPORTANT: set this to keep on auto-introspection for system dependencies like libc++6
-set (CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
-
-#Keep Debian package structure untouched
-set(CPACK_DEBIAN_PACKAGE_CONTROL_STRICT_PERMISSION TRUE)
-
-#Standard naming schema for Debian-based distros
-set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}")
-set(CPACK_PACKAGE_VENDOR "Continental LiDAR Segment")
-set(CPACK_PACKAGE_CONTACT "<moises.diaz@continental-corporation.com>")
-
-#Turn the process on    
-include(CPack)
