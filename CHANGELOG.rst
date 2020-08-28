@@ -2,6 +2,10 @@
 Changelog for package hfl_driver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.13 (2020-08-28)
+-------------------
+* fixed roslint error
+
 0.0.12 (2020-08-24)
 -------------------
 * removed unnecessary install files
