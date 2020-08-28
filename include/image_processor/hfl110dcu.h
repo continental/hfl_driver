@@ -27,15 +27,8 @@
 #include <sensor_msgs/PointCloud2.h>
 #include <sensor_msgs/point_cloud2_iterator.h>
 
-#define HFL110B2_MAGIC_NUMBER_8_BIT 0.1953125            // 50/256 = 50 meter max range / 256 8-bit max value
-#define HFL110B2_MAGIC_NUMBER_10_BIT 0.048828125         // 50/1024 = 50 meter max range / 1024 10-bit max value
-#define HFL110B2_MAGIC_NUMBER_12_BIT 0.01220703125       // 50/4096 = 50 meter max range / 4096 12-bit max value
-#define HFL110B2_MAGIC_NUMBER_14_BIT 0.00305176          // 50/16384 = 50 meter max range / 16384 14-bit max value
-
 #define HFL110_MAGIC_NUMBER_16_BIT 0.000762951           // 50 / 2^16
 
-// #define HFL110B2_TF_TRANSLATION_MAGIC_NUMBER 0.00390625  // 1/256 m
-// #define HFL110B2_TF_ROTATION_MAGIC_NUMBER 0.1            // 0.1 degrees
 const float NO_RETURN_DISTANCES = NAN;
 
 namespace hfl
