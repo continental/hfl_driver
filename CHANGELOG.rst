@@ -9,8 +9,8 @@ Changelog for package hfl_driver
 * Merge pull request `#28 <https://github.com/continental/hfl_driver/issues/28>`_ from continental/ros1/main
 * Contributors: Evan Flynn
 
-Forthcoming
------------
+0.0.15 (2020-08-28)
+-------------------
 * open rosrepo pr automatically
 * Merge pull request `#35 <https://github.com/continental/hfl_driver/issues/35>`_ from continental/release-0.0.14
 * 0.0.14
