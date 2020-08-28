@@ -13,6 +13,8 @@ add_subdirectory(hfl_utilities)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   tf
+  tf2
+  tf2_geometry_msgs 
   dynamic_reconfigure
   nodelet
   roscpp
@@ -124,6 +126,7 @@ catkin_package(
   std_msgs 
   visualization_msgs
   angles
+  tf
   tf2
   tf2_geometry_msgs
   image_transport

@@ -9,6 +9,17 @@ Changelog for package hfl_driver
 * Merge pull request `#28 <https://github.com/continental/hfl_driver/issues/28>`_ from continental/ros1/main
 * Contributors: Evan Flynn
 
+0.0.16 (2020-08-28)
+-------------------
+* Merge pull request `#38 <https://github.com/continental/hfl_driver/issues/38>`_ from continental/ros1/main
+* add tf to package.xml
+* Update CMakeLists.txt
+* add tf to find
+* add tf2_geometry_msgs to find
+* fixed tf build error
+* clean up
+* Contributors: Evan Flynn
+
 0.0.15 (2020-08-28)
 -------------------
 * open rosrepo pr automatically
