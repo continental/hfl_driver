@@ -24,7 +24,7 @@ jobs:
         git_user: Evan Flynn
         git_email: evanflynn.msu@gmail.com
         tag_and_release: true
-        #open_pr: true
+        open_pr: true
     - name: create github release
       uses: actions/create-release@v1
       with:
