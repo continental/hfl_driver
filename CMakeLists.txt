@@ -126,6 +126,7 @@ catkin_package(
   std_msgs 
   visualization_msgs
   angles
+  tf
   tf2
   tf2_geometry_msgs
   image_transport
