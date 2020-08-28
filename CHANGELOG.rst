@@ -2,8 +2,8 @@
 Changelog for package hfl_driver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.13 (2020-08-28)
+-------------------
 * fixed roslint error
 * removed unnecessary install files
 * fix udp_com linking error
