@@ -12,7 +12,6 @@ add_subdirectory(hfl_utilities)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roslint
   tf
   dynamic_reconfigure
   nodelet
