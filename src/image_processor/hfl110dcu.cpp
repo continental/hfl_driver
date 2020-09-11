@@ -39,6 +39,14 @@
 #include <vector>
 #include <cmath>
 
+// Note: the initMatrix function in this file was originally written for
+// the depth_image_proc ROS package and is included here instead. Full credit
+// of development goes to the authors of that package and use of it in this
+// package was granted by one of the authors since it is not a static function:
+// https://github.com/ros-perception/image_pipeline/blob/
+// 9b6764166096fa1d90706459fb70242f46ac8643/depth_image_proc/src/
+// nodelets/point_cloud_xyzi_radial.cpp#L101
+
 namespace hfl
 {
 HFL110DCU::HFL110DCU(std::string model, std::string version,
