@@ -1,15 +1,47 @@
-/// Copyright 2019 Continental AG
+// Copyright 2020 Continental AG
+// All rights reserved.
+//
+// Software License Agreement (BSD 2-Clause Simplified License)
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions
+// are met:
+//
+//  * Redistributions of source code must retain the above copyright
+//    notice, this list of conditions and the following disclaimer.
+//  * Redistributions in binary form must reproduce the above
+//    copyright notice, this list of conditions and the following
+//    disclaimer in the documentation and/or other materials provided
+//    with the distribution.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+// COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+// LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+// LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+// ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+// POSSIBILITY OF SUCH DAMAGE.
+
+
 ///
 /// @file camera_commander.cpp
 ///
 /// @brief This file implements the CameraCommander class methods.
 ///
 #include "camera_commander/camera_commander.h"
+
 #include <pluginlib/class_list_macros.h>
-#include "image_processor/hfl110dcu.h"
+
 #include <string>
 #include <vector>
+#include <memory>
 
+#include "image_processor/hfl110dcu.h"
 namespace hfl
 {
 CameraCommander::CameraCommander()
@@ -45,11 +77,13 @@ void CameraCommander::onInit()
   // Initialize current state and timer_ callback
   current_state_ = state_probe;
   previous_state_ = state_probe;
-  auto set_state_callback = std::bind(&CameraCommander::setCommanderState, this, std::placeholders::_1);
+  auto set_state_callback =
+      std::bind(&CameraCommander::setCommanderState, this, std::placeholders::_1);
   timer_ = node_handler_.createTimer(ros::Duration(1), set_state_callback);
 }
 
-bool CameraCommander::createSocket(std::string computer_addr, std::string camera_addr, uint16_t port, bool isMulticast)
+bool CameraCommander::createSocket(std::string computer_addr, std::string camera_addr,
+                                      uint16_t port, bool isMulticast)
 {
   // Create a socket Request service message
   udp_com::UdpSocket socket_request;
@@ -72,7 +106,8 @@ bool CameraCommander::udpInit()
 {
   // Get ethernet interface
   node_handler_.getParam("ethernet_interface", ethernet_interface_);
-  ROS_INFO("%s/ethernet_interface: %s", node_handler_.getNamespace().c_str(), ethernet_interface_.c_str());
+  ROS_INFO("%s/ethernet_interface: %s",
+      node_handler_.getNamespace().c_str(), ethernet_interface_.c_str());
 
   // Get camera IP address
   node_handler_.getParam("camera_ip_address", camera_address_);
@@ -86,14 +121,19 @@ bool CameraCommander::udpInit()
   node_handler_.getParam("frame_data_port", frame_data_port_);
   ROS_INFO("%s/frame_data_port:      %i", namespace_.c_str(), frame_data_port_);
 
+  // Get object data port number
+  node_handler_.getParam("object_data_port", object_data_port_);
+  ROS_INFO("%s/object_data_port:      %i", namespace_.c_str(), object_data_port_);
+
   // Get ethernet namespace node handler
   ros::NodeHandle ethernet_interface_handler(ethernet_interface_);
 
   // Initialize udp Create Socket service client
-  udp_socket_creation_service_client_ = ethernet_interface_handler.serviceClient<udp_com::UdpSocket>("udp/"
-                                                                                                     "create_socket");
+  udp_socket_creation_service_client_ =
+      ethernet_interface_handler.serviceClient<udp_com::UdpSocket>("udp/create_socket");
   // Initialize udp send service client
-  udp_send_service_client_ = ethernet_interface_handler.serviceClient<udp_com::UdpSend>("udp/send");
+  udp_send_service_client_ =
+      ethernet_interface_handler.serviceClient<udp_com::UdpSend>("udp/send");
 
   ROS_INFO("Checking for UDP Communication...");
   ros::service::waitForService(udp_socket_creation_service_client_.getService(), -1);
@@ -112,6 +152,20 @@ bool CameraCommander::udpInit()
     ethernet_interface_handler.subscribe(std::string("udp/p") +
        std::to_string(frame_data_port_), 1000,
        &CameraCommander::frameDataCallback, this);
+
+  ROS_WARN("create object socket");
+  // Create a Object_Data Socket
+  if (!createSocket(computer_address_, camera_address_, object_data_port_, false))
+  {
+    // Socket Not Created!
+    return false;
+  }
+
+  object_data_subscriber_ =
+    ethernet_interface_handler.subscribe(std::string("udp/p") +
+       std::to_string(object_data_port_), 1000,
+       &CameraCommander::objectDataCallback, this);
+
   // Everything Initialized
   return true;
 }
@@ -138,16 +192,15 @@ bool CameraCommander::setFlash()
     if (model == "hfl110dcu")
     {
       flash_.reset(new HFL110DCU(model, version, frame_id, node_handler_));
-    }
-    else
+    } else {
       ROS_ERROR("Camera model not found!");
     }
+  }
   catch (int e)
   {
     ROS_ERROR("Camera load failed!");
     return false;
   }
-
   // Return
   return true;
 }
@@ -230,6 +283,8 @@ error_codes CameraCommander::checkForError()
   {
     return lut_socket_error;
   }
+
+  return no_error;
 }
 
 bool CameraCommander::fixError(error_codes error)
@@ -270,6 +325,26 @@ void CameraCommander::frameDataCallback(const udp_com::UdpPacket& udp_packet)
   }
 }
 
+void CameraCommander::objectDataCallback(const udp_com::UdpPacket& udp_packet)
+{
+  // Checks UPD package source IP address
+  if (udp_packet.address == camera_address_)
+  {
+    switch (current_state_)
+    {
+      case state_probe:
+        ROS_INFO_ONCE("Connection established with Object Data UDP Port!");
+        previous_state_ = state_probe;
+        current_state_ = state_init;
+        break;
+      case state_done:
+        ROS_INFO_ONCE("Object Data UDP packages arriving...");
+        flash_->processObjectData(udp_packet.data);
+        break;
+    }
+  }
+}
+
 bool CameraCommander::sendCommand(const std::vector<uint8_t>& data)
 {
   // Create a UDP request service message
@@ -285,16 +360,12 @@ bool CameraCommander::sendCommand(const std::vector<uint8_t>& data)
       udp_send_service_client_.call(send_request))
   {
     return send_request.response.sent;  // Will always be true
-  }
-  else if (!send_request.response.socketCreated)
-  {
+  } else if (!send_request.response.socketCreated) {
     // response.socketCreated will be false right at start up
     // error is immediately set since sockets were not created
     current_state_ = state_error;
     error_status_ = frame_socket_error;
-  }
-  else
-  {
+  } else {
     ROS_ERROR("Could not send data to sensor");
     ROS_INFO("Please check the connections to the sensor. ");
   }
@@ -309,6 +380,35 @@ void CameraCommander::dynamicPametersCallback(hfl_driver::HFLConfig& config, uin
   if (current_state_ != state_done)
   {
     return;
+  } else {
+    // camera is active
+    if (flash_->setGlobalRangeOffset(config.global_range_offset))
+      ROS_INFO("%s/global_range_offset: %f", namespace_.c_str(), config.global_range_offset);
+    if (flash_->setChannelRangeOffset(0, config.ch1_offset))
+      ROS_INFO("%s/ch1_offset: %f", namespace_.c_str(), config.ch1_offset);
+    if (flash_->setChannelRangeOffset(1, config.ch2_offset))
+      ROS_INFO("%s/ch2_offset: %f", namespace_.c_str(), config.ch2_offset);
+    if (flash_->setChannelRangeOffset(2, config.ch3_offset))
+      ROS_INFO("%s/ch3_offset: %f", namespace_.c_str(), config.ch3_offset);
+    if (flash_->setChannelRangeOffset(3, config.ch4_offset))
+      ROS_INFO("%s/ch4_offset: %f", namespace_.c_str(), config.ch4_offset);
+
+    if (flash_->setIntensityRangeOffset(0, config.int500_offset))
+      ROS_INFO("%s/int500_offset: %f", namespace_.c_str(), config.int500_offset);
+    if (flash_->setIntensityRangeOffset(1, config.int1000_offset))
+      ROS_INFO("%s/int1000_offset: %f", namespace_.c_str(), config.int1000_offset);
+    if (flash_->setIntensityRangeOffset(2, config.int1500_offset))
+      ROS_INFO("%s/int1500_offset: %f", namespace_.c_str(), config.int1500_offset);
+    if (flash_->setIntensityRangeOffset(3, config.int2000_offset))
+      ROS_INFO("%s/int2000_offset: %f", namespace_.c_str(), config.int2000_offset);
+    if (flash_->setIntensityRangeOffset(4, config.int2500_offset))
+      ROS_INFO("%s/int2500_offset: %f", namespace_.c_str(), config.int2500_offset);
+    if (flash_->setIntensityRangeOffset(5, config.int3000_offset))
+      ROS_INFO("%s/int3000_offset: %f", namespace_.c_str(), config.int3000_offset);
+    if (flash_->setIntensityRangeOffset(6, config.int3500_offset))
+      ROS_INFO("%s/int3500_offset: %f", namespace_.c_str(), config.int3500_offset);
+    if (flash_->setIntensityRangeOffset(7, config.int4096_offset))
+      ROS_INFO("%s/int4096_offset: %f", namespace_.c_str(), config.int4096_offset);
   }
 }
 }  // end of namespace hfl
