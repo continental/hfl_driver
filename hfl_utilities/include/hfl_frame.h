@@ -148,9 +148,4 @@ private:
 };
 
 }  // namespace hfl
-
-<<<<<<< HEAD
-#endif  // HFL_FRAME_H
-=======
 #endif  // HFL_FRAME_H_
->>>>>>> updates
