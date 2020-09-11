@@ -1,24 +1,56 @@
-/// Copyright 2019 Continental AG
+// Copyright 2020 Continental AG
+// All rights reserved.
+//
+// Software License Agreement (BSD 2-Clause Simplified License)
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions
+// are met:
+//
+//  * Redistributions of source code must retain the above copyright
+//    notice, this list of conditions and the following disclaimer.
+//  * Redistributions in binary form must reproduce the above
+//    copyright notice, this list of conditions and the following
+//    disclaimer in the documentation and/or other materials provided
+//    with the distribution.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+// COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+// LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+// LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+// ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+// POSSIBILITY OF SUCH DAMAGE.
+
+
 ///
 /// @file camera_commander.h
 ///
 /// @brief This file defines the CameraCommander class
 ///
-#ifndef CAMERA_COMMANDER_CAMERA_COMMANDER_H
-#define CAMERA_COMMANDER_CAMERA_COMMANDER_H
+#ifndef CAMERA_COMMANDER__CAMERA_COMMANDER_H_
+#define CAMERA_COMMANDER__CAMERA_COMMANDER_H_
+
+#include <hfl_driver/HFLConfig.h>
+#include <hfl_interface.h>
 
 #include <dynamic_reconfigure/server.h>
-#include <hfl_driver/HFLConfig.h>
 #include <nodelet/nodelet.h>
-// TODO(evan_flynn): should include hfl_utilities library name
-#include <hfl_interface.h>
-#include "ros/ros.h"
+
+#include <vector>
+#include <string>
+#include <memory>
+
 #include "udp_com/UdpPacket.h"
 #include "udp_com/UdpSend.h"
 #include "udp_com/UdpSocket.h"
 
-#include <vector>
-#include <string>
+#include "ros/ros.h"
 
 namespace hfl
 {
@@ -79,7 +111,8 @@ public:
   /// @param[in] isMulticast describes if the connection is multicast
   /// @return bool true if socket created
   ///
-  bool createSocket(std::string computerAddr, std::string cameraAddr, uint16_t port, bool isMulticast);
+  bool createSocket(std::string computerAddr, std::string cameraAddr,
+      uint16_t port, bool isMulticast);
 
 private:
   /// Node Handle
@@ -129,6 +162,9 @@ private:
 
   /// Frame Data UDP port
   int frame_data_port_;
+
+  /// Object Data UDP port
+  int object_data_port_;
 
   /// Pointer to Flash camera
   std::shared_ptr<hfl::HflInterface> flash_;
@@ -223,4 +259,4 @@ private:
 
 }  // namespace hfl
 
-#endif  // CAMERA_COMMANDER_CAMERA_COMMANDER_H
+#endif  // CAMERA_COMMANDER__CAMERA_COMMANDER_H_

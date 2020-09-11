@@ -12,8 +12,7 @@ include_directories(
   include
 )
 
-# Add hfl_utils library
-add_library(${PROJECT_NAME} 
+add_library(${PROJECT_NAME} SHARED 
   src/base_hfl110dcu.cpp
   src/hfl_frame.cpp
   src/hfl_interface.cpp

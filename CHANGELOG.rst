@@ -2,13 +2,6 @@
 Changelog for package hfl_driver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.0.14 (2020-08-28)
--------------------
-* Merge pull request `#30 <https://github.com/continental/hfl_driver/issues/30>`_ from continental/ros1/main
-* fixed release workflow typo
-* Merge pull request `#28 <https://github.com/continental/hfl_driver/issues/28>`_ from continental/ros1/main
-* Contributors: Evan Flynn
-
 0.0.17 (2020-08-28)
 -------------------
 * Merge pull request `#42 <https://github.com/continental/hfl_driver/issues/42>`_ from continental/ros1/main
@@ -37,6 +30,13 @@ Changelog for package hfl_driver
 * fixed release workflow typo
 * Merge pull request `#28 <https://github.com/continental/hfl_driver/issues/28>`_ from continental/ros1/main
 * Contributors: Evan Flynn, flynneva
+
+0.0.14 (2020-08-28)
+-------------------
+* Merge pull request `#30 <https://github.com/continental/hfl_driver/issues/30>`_ from continental/ros1/main
+* fixed release workflow typo
+* Merge pull request `#28 <https://github.com/continental/hfl_driver/issues/28>`_ from continental/ros1/main
+* Contributors: Evan Flynn
 
 0.0.13 (2020-08-28)
 -------------------

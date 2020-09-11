@@ -4,9 +4,10 @@
   <arg name="camera_model" value="hfl110dcu" />
   <arg name="camera_version" default="v1" />
   <arg name="camera_frame_id" default="$(arg camera_model)_01" />
-  <arg name="parent_frame_id" default="map" />
+  <arg name="parent_frame_id" default="custom_frame" />
   <arg name="camera_ip_address" default="192.168.10.21" />
   <arg name="frame_data_port" default="57410" />
+  <arg name="object_data_port" default="57411" />
   <arg name="computer_ip_address" default="192.168.10.5" />
 
   <!-- Node Manager Arguments -->
@@ -24,7 +25,10 @@
   <node pkg="nodelet" type="nodelet" name="$(arg manager_name)" args="manager" output="screen" />
 
   <!-- Static TF from Sensor to Parent Frame -->
-  <node pkg="tf" type="static_transform_publisher" name="hfl110_tf" args="0 0 1 0 0 -1.57 $(arg parent_frame_id) $(arg camera_frame_id) 100"/>
+  <!-- User can uncomment and modify the below static tf for testing purposes -->
+  <!-- By default the hfl_driver publishes extrinsics received from the sensor via UDP packets -->
+  <!-- <node pkg="tf" type="static_transform_publisher" name="hfl110_tf" args="0 0 1 0 0 -1.57 $(arg parent_frame_id) $(arg camera_frame_id) 100"/> -->
+  
   <!-- CameraCommander Node -->
   <node pkg="nodelet" type="nodelet" name="$(arg node_name)" args="load hfl_driver/CameraCommander $(arg manager_name)" output="screen">
     <param name="id" value="$(arg node_name)" />
@@ -35,21 +39,18 @@
     <param name="camera_ip_address" value="$(arg camera_ip_address)" />
     <param name="computer_ip_address" value="$(arg computer_ip_address)" />
     <param name="frame_data_port" value="$(arg frame_data_port)" />
+    <param name="object_data_port" value="$(arg object_data_port)" />
   </node>
 
-  <!-- Point cloud publisher for return 1-->
-  <node pkg="nodelet" type="nodelet" name="toPoints_$(arg node_name)" args="load depth_image_proc/point_cloud_xyzi_radial $(arg manager_name)"> 
-    <remap from="intensity/image_raw" to="$(arg node_name)/intensity/image_raw" />
-    <remap from="intensity/camera_info" to="$(arg node_name)/intensity/camera_info" />
-    <remap from="depth/image_raw" to="$(arg node_name)/depth/image_raw" />
-    <remap from="points" to="$(arg node_name)/points" />
-  </node>
-  <!-- Point cloud publisher for return 2 -->
-  <node pkg="nodelet" type="nodelet" name="toPoints2_$(arg node_name)" args="load depth_image_proc/point_cloud_xyzi_radial $(arg manager_name)" >
-          <remap from="intensity/image_raw" to="$(arg node_name)/intensity2/image_raw" />
-          <remap from="intensity/camera_info" to="$(arg node_name)/intensity2/camera_info" />
-          <remap from="depth/image_raw" to="$(arg node_name)/depth2/image_raw" />
-          <remap from="points" to="$(arg node_name)/points2" />
-  </node>
-
+  <!-- Run a passthrough filter to clean the pointcloud -->
+  <node pkg="nodelet" type="nodelet" name="intensity_filter" args="load pcl/PassThrough $(arg manager_name)" output="screen">
+    <remap from="~input" to="$(arg node_name)/points" />
+    <remap from="/intensity_filter/output" to="$(arg node_name)/points_filtered" />
+    <rosparam>
+      filter_field_name: intensity
+      filter_limit_min: 300
+      filter_limit_max: 4000
+      filter_limit_negative: False
+    </rosparam>
+  </node>  
 </launch>
