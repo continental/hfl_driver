@@ -9,6 +9,13 @@ Changelog for package hfl_driver
 * Merge pull request `#28 <https://github.com/continental/hfl_driver/issues/28>`_ from continental/ros1/main
 * Contributors: Evan Flynn
 
+0.0.17 (2020-08-28)
+-------------------
+* Merge pull request `#42 <https://github.com/continental/hfl_driver/issues/42>`_ from continental/ros1/main
+* fixed build export depend typo
+* add dynamic_reconfigure to build depend
+* Contributors: Evan Flynn
+
 0.0.16 (2020-08-28)
 -------------------
 * Merge pull request `#38 <https://github.com/continental/hfl_driver/issues/38>`_ from continental/ros1/main
