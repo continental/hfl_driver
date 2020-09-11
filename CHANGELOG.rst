@@ -9,8 +9,8 @@ Changelog for package hfl_driver
 * add dynamic_reconfigure to build depend
 * Contributors: Evan Flynn
 
-Forthcoming
------------
+0.0.18 (2020-09-11)
+-------------------
 * put in some dummy tests for now
 * fixed one unit test
 * hfl_utilities needs to be a SHARED lib
