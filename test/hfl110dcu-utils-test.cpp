@@ -66,7 +66,10 @@ public:
     return true;
   };
   // TODO(evan_flynn): should this return a bool to indicate status?
-  bool processFrameData(const std::vector<uint8_t>& data) override{};
+  bool processFrameData(const std::vector<uint8_t>& data) override
+  {
+    return true;
+  };
 };
 
 ///
