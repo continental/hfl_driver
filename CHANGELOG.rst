@@ -2,13 +2,6 @@
 Changelog for package hfl_driver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.0.17 (2020-08-28)
--------------------
-* Merge pull request `#42 <https://github.com/continental/hfl_driver/issues/42>`_ from continental/ros1/main
-* fixed build export depend typo
-* add dynamic_reconfigure to build depend
-* Contributors: Evan Flynn
-
 0.0.18 (2020-09-11)
 -------------------
 * put in some dummy tests for now
@@ -22,11 +15,16 @@ Changelog for package hfl_driver
 * merge in public github changes
 * - various updates to pointcloud output
 * Merge pull request `#45 <https://github.com/continental/hfl_driver/issues/45>`_ from continental/release-0.0.17
-* 0.0.17
-* Update changelog
+* Contributors: Evan Flynn, flynneva
+
+0.0.17 (2020-08-28)
+-------------------
 * Merge pull request `#42 <https://github.com/continental/hfl_driver/issues/42>`_ from continental/ros1/main
 * fixed build export depend typo
 * add dynamic_reconfigure to build depend
+* 0.0.17
+* Update changelog
+* Merge pull request `#42 <https://github.com/continental/hfl_driver/issues/42>`_ from continental/ros1/main
 * Merge pull request `#39 <https://github.com/continental/hfl_driver/issues/39>`_ from continental/ros1/main
 * Merge pull request `#34 <https://github.com/continental/hfl_driver/issues/34>`_ from continental/release-0.0.14
 * Merge pull request `#31 <https://github.com/continental/hfl_driver/issues/31>`_ from continental/ros1/main
@@ -34,7 +32,7 @@ Changelog for package hfl_driver
 * Merge pull request `#21 <https://github.com/continental/hfl_driver/issues/21>`_ from continental/ros1/devel
 * Merge pull request `#15 <https://github.com/continental/hfl_driver/issues/15>`_ from continental/ros1/devel
 * Merge pull request `#12 <https://github.com/continental/hfl_driver/issues/12>`_ from continental/ros1/main
-* Contributors: Evan Flynn, flynneva
+* Contributors: Evan Flynn
 
 0.0.16 (2020-08-28)
 -------------------
