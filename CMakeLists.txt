@@ -1,14 +1,6 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.5.1)
 
-if(GIT_VERSION STREQUAL "")
-  message("No version specified...setting to default 0.0.0")
-  set(GIT_VERSION 0.0.0)
-endif()
-
-# TODO(evan_flynn): use git tag as project version
-project(hfl_driver
-  VERSION ${GIT_VERSION}
-  DESCRIPTION "Generic ROS driver for HFL products")
+project(hfl_driver)
 
 ## Compile as C++11, supported in ROS kinetic  and newer
 add_compile_options(-std=c++11)
@@ -20,8 +12,9 @@ add_subdirectory(hfl_utilities)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roslint
   tf
+  tf2
+  tf2_geometry_msgs 
   dynamic_reconfigure
   nodelet
   roscpp
@@ -36,7 +29,6 @@ find_package(catkin REQUIRED COMPONENTS
 
 ## System dependencies are found with CMake's conventions
 #find_package(Boost REQUIRED COMPONENTS)
-
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -134,9 +126,9 @@ catkin_package(
   std_msgs 
   visualization_msgs
   angles
+  tf
   tf2
   tf2_geometry_msgs
-  arpa
   image_transport
   camera_info_manager
   message_generation
@@ -184,13 +176,11 @@ target_link_libraries(${PROJECT_NAME}
 ## Testing ##
 #############
 
-# ROS linter
-roslint_cpp()
-
 if(CATKIN_ENABLE_TESTING)
+  find_package(roslint REQUIRED)
   find_package(rostest REQUIRED)
-  find_package(gtest)
-
+  # ROS linter
+  roslint_cpp()
   # Add rostest gtest
   add_rostest_gtest(tests_hfl110dcu
     test/hfl110dcu.test 
