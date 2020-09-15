@@ -1,14 +1,14 @@
 Copyright (c) 2020, Continental AG
 All rights reserved.
 
-[HFL_driver : 0.0.19]
+[HFL_driver : 0.0.20]
 
 Phase: DEVELOPMENT
 Distribution: OPENSOURCE
 
 Components: 
 
-HFL_driver 0.0.19 : BSD 2-clause "Simplified" License
+HFL_driver 0.0.20 : BSD 2-clause "Simplified" License
 
 
 Copyright Text: 
@@ -18,7 +18,7 @@ All rights reserved.
 Licenses: 
 
 BSD 2-clause "Simplified" License
-(HFL_driver 0.0.19)
+(HFL_driver 0.0.20)
 
 Copyright (c) 2020, Continental AG
 All rights reserved.
