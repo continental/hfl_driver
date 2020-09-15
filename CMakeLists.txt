@@ -22,6 +22,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   message_generation
   image_transport
+  image_geometry
   camera_info_manager
   cv_bridge
   udp_com
@@ -130,6 +131,7 @@ catkin_package(
   tf2
   tf2_geometry_msgs
   image_transport
+  image_geometry
   camera_info_manager
   message_generation
   udp_com
