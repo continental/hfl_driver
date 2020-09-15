@@ -2,6 +2,12 @@
 Changelog for package hfl_driver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.20 (2020-09-15)
+-------------------
+* fixed package.xml for rosdep install
+* Merge pull request `#58 <https://github.com/continental/hfl_driver/issues/58>`_ from continental/release-0.0.19
+* Contributors: Evan Flynn
+
 0.0.19 (2020-09-11)
 -------------------
 * 0.0.19
@@ -9,7 +15,7 @@ Changelog for package hfl_driver
 * Merge pull request `#54 <https://github.com/continental/hfl_driver/issues/54>`_ from continental/release-0.0.18
 * removed hfl_utilties ros package.xml
 * Merge pull request `#52 <https://github.com/continental/hfl_driver/issues/52>`_ from continental/release-0.0.18
-* Contributors: Evan Flynn, flynneva
+* Contributors: Evan Flynn
 
 0.0.18 (2020-09-11)
 -------------------
@@ -24,7 +30,7 @@ Changelog for package hfl_driver
 * merge in public github changes
 * - various updates to pointcloud output
 * Merge pull request `#45 <https://github.com/continental/hfl_driver/issues/45>`_ from continental/release-0.0.17
-* Contributors: Evan Flynn, flynneva
+* Contributors: Evan Flynn
 
 0.0.17 (2020-08-28)
 -------------------

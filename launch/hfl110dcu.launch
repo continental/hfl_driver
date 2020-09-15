@@ -43,6 +43,8 @@
   </node>
 
   <!-- Run a passthrough filter to clean the pointcloud -->
+  <!-- requires install of pcl_ros package -->
+  <!-- sudo apt install ros-<your-distro>-pcl-ros
   <node pkg="nodelet" type="nodelet" name="intensity_filter" args="load pcl/PassThrough $(arg manager_name)" output="screen">
     <remap from="~input" to="$(arg node_name)/points" />
     <remap from="/intensity_filter/output" to="$(arg node_name)/points_filtered" />
@@ -52,5 +54,5 @@
       filter_limit_max: 4000
       filter_limit_negative: False
     </rosparam>
-  </node>  
+  </node> -->
 </launch>

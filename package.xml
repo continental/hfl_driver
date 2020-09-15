@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>hfl_driver</name>
-  <version>0.0.19</version>
+  <version>0.0.20</version>
 
   <description>The hfl package</description>
 
@@ -17,6 +17,7 @@
   <author email="moises.diaz@continental.com">Moises Diaz</author>
 
   <buildtool_depend>catkin</buildtool_depend>
+  
   <build_depend>nodelet</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>rospy</build_depend>
@@ -53,7 +54,6 @@
   <exec_depend>message_generation</exec_depend>
   <exec_depend>message_runtime</exec_depend>
   <exec_depend>dynamic_reconfigure</exec_depend>
-	
 
   <build_export_depend>nodelet</build_export_depend> 
   <build_export_depend>roscpp</build_export_depend>
