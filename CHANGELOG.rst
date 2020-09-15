@@ -43,8 +43,8 @@ Changelog for package hfl_driver
 * Merge pull request `#12 <https://github.com/continental/hfl_driver/issues/12>`_ from continental/ros1/main
 * Contributors: Evan Flynn
 
-Forthcoming
------------
+0.0.20 (2020-09-15)
+-------------------
 * fixed package.xml
 * Merge pull request `#58 <https://github.com/continental/hfl_driver/issues/58>`_ from continental/release-0.0.19
 * bump notices and fix changelog
