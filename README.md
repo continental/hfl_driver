@@ -12,14 +12,16 @@ This package was designed to be a [Robotic Operating System (ROS)](https://index
 
 Please [review the source code documentation](https://continental.github.io/hfl_driver/html/index.html) for more details on how the project is structured.
 
-### Quickstart
+## Quickstart
 
-[WIP] Install like any other ROS package:
+Install like any other ROS package:
 ```
 sudo apt install ros-<ros-distro>-hfl-driver
 ```
+**Note:** there may be a delay from when new code is available in this repository to when it will become available via apt.
 
-### Install from source
+## Install from source
+
 First, make sure your system is supported and already has ROS installed (see table above)
 
 Go ahead and clone this repository into your `catkin_ws`.
