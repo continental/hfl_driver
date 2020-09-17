@@ -82,25 +82,23 @@ $(function() {
 <p>Please <a href="https://continental.github.io/hfl_driver/html/index.html">review the source code documentation</a> for more details on how the project is structured.</p>
 <h2>Quickstart</h2>
 <p>[WIP] Install like any other ROS package: </p><div class="fragment"><div class="line">sudo apt install ros-&lt;ros-distro&gt;-hfl-driver</div>
-</div><!-- fragment --><h2>Getting Started</h2>
-<ol type="1">
-<li>First, make sure your system is supported and already has ROS installed (see table above)</li>
-<li>Go ahead and clone this repository into your <code>catkin_ws</code>. Read up on <code>catkin_ws</code> by [following this tutorial(<a href="http://wiki.ros.org/catkin/Tutorials/create_a_workspace">http://wiki.ros.org/catkin/Tutorials/create_a_workspace</a>).</li>
-<li>Within your <code>catkin_ws</code> directory, go ahead and compile the code:<ol type="a">
-<li><code>catkin_make</code></li>
-<li><b>you may have to run <a href="https://www.poftut.com/how-to-install-and-use-dos2unix-command-in-linux/">dos2unix</a> on the <code>hfl_driver/cfg/HFL.cfg</code> file in order to get it to compile</b></li>
-</ol>
-</li>
-<li>After a successful compile, add the new HFL ROS packages to your environment: <div class="fragment"><div class="line">echo &quot;source &lt;path/to/your/catkin_ws&gt;/devel/setup.bash&quot; &gt;&gt; ~/.bashrc</div>
+</div><!-- fragment --><h2>Install from source</h2>
+<p>First, make sure your system is supported and already has ROS installed (see table above)</p>
+<p>Go ahead and clone this repository into your <code>catkin_ws</code>. </p><div class="fragment"><div class="line"># url</div>
+<div class="line">git clone https://github.com/continental/hfl_driver.git</div>
+<div class="line"># ssh</div>
+<div class="line">git clone git@github.com:continental/hfl_driver.git</div>
+</div><!-- fragment --><p>Read up on <code>catkin_ws</code> by [following this tutorial(<a href="http://wiki.ros.org/catkin/Tutorials/create_a_workspace">http://wiki.ros.org/catkin/Tutorials/create_a_workspace</a>).</p>
+<p>From your <code>catkin_ws</code> directory, use <code>rosdep</code> to install dependencies rosdep install hfl_driver: </p><div class="fragment"><div class="line">rosdep install hfl_driver</div>
+</div><!-- fragment --><p>Within your <code>catkin_ws</code> directory, go ahead and compile the code: </p><div class="fragment"><div class="line">catkin_make</div>
+<div class="line"># with tests</div>
+<div class="line">catkin_make run_tests</div>
+</div><!-- fragment --><p>After a successful compile, add the new HFL ROS packages to your environment: </p><div class="fragment"><div class="line">echo &quot;source &lt;path/to/your/catkin_ws&gt;/devel/setup.bash&quot; &gt;&gt; ~/.bashrc</div>
 <div class="line">source ~/.bashrc</div>
-</div><!-- fragment --></li>
-<li>In two separate terminals, run the following commands:<ol type="a">
-<li><code>roscore</code></li>
-<li><code>roslaunch hfl_driver hfl110dcu.launch</code></li>
-</ol>
-</li>
-</ol>
-<p><a href="http://wiki.ros.org/roslaunch/XML/arg">Parameters</a> for hfl_driver launch file</p>
+</div><!-- fragment --><p>In two separate terminals, run the following commands.</p>
+<p>Terminal 1: </p><div class="fragment"><div class="line">roscore</div>
+</div><!-- fragment --><p>Terminal 2: </p><div class="fragment"><div class="line">roslaunch hfl_driver hfl110dcu.launch</div>
+</div><!-- fragment --><p><a href="http://wiki.ros.org/roslaunch/XML/arg">Parameters</a> for hfl_driver launch file</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Parameter  </th><th class="markdownTableHeadNone">Description  </th><th class="markdownTableHeadCenter">Default Values   </th></tr>
@@ -115,11 +113,12 @@ $(function() {
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">computer_ip_address  </td><td class="markdownTableBodyNone">Computer IPv4 Address  </td><td class="markdownTableBodyCenter">192.168.10.5   </td></tr>
 </table>
-<p><b>TIP</b>: check a launch files arguments before calling roslaunch to confirm you are passing the correct parameters. Use <a href="https://www.wireshark.org/">wireshark</a> or another network tool to see if you are receiving packets.</p>
-<p>Be sure to check the documentation website for more information.</p>
+<p><b>TIP</b>: check a launch files arguments before calling roslaunch to confirm you are passing the correct parameters.</p>
+<p><b>TIP</b>: If you cannot connect to the sensor, use <a href="https://www.wireshark.org/">wireshark</a> or another network tool to see if you are receiving packets.</p>
+<p>Be sure to check the <a href="https://continental.github.io/hfl_driver/index.html">documentation website</a> for more information.</p>
 <h1>CPP static code analysis</h1>
-<p>ROS also comes with static code analysis support, therefore in order to run it for the hfl_driver package, type: </p><div class="fragment"><div class="line">catkin_make run_tests roslint_&lt;name_of_ros_package&gt;</div>
-</div><!-- fragment --><p>Where in this case you would put hfl_driver or udp_com in for &lt;name_of_ros_package&gt;. This will output the errors and warnings on console. If more info is required see <a href="http://wiki.ros.org/roslint">this</a>.</p>
+<p>ROS also comes with static code analysis support, therefore in order to run it for the hfl_driver package, type: </p><div class="fragment"><div class="line">catkin_make run_tests roslint_hfl_driver</div>
+</div><!-- fragment --><p>This will output the errors and warnings on console. If more info is required see <a href="http://wiki.ros.org/roslint">this</a>.</p>
 <h2>Authors</h2>
 <p>Many have contributed to this project beyond just the people listed here. Thank you to those who have answered any questions, emails or supported the project in other ways. Without you none of this would have been possible.</p><ul>
 <li>Gerardo Bravo</li>
