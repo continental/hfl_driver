@@ -10,7 +10,7 @@ This package was designed to be a [Robotic Operating System (ROS)](https://index
 
 **License**: BSD Two Clause License
 
-Please [review the source code documentation](https://continental.github.io/hfl_driver/html/index.html) for more details on how the project is structured.
+Please [review the source code documentation](https://continental.github.io/hfl_driver/index.html) for more details on how the project is structured.
 
 ## Quickstart
 
@@ -31,7 +31,7 @@ git clone https://github.com/continental/hfl_driver.git
 # ssh
 git clone git@github.com:continental/hfl_driver.git
 ```
-Read up on `catkin_ws` by [following this tutorial(http://wiki.ros.org/catkin/Tutorials/create_a_workspace).
+Read up on `catkin_ws` by [following this tutorial](http://wiki.ros.org/catkin/Tutorials/create_a_workspace).
 
 From your `catkin_ws` directory, use `rosdep` to install dependencies rosdep install hfl_driver:
 ```
