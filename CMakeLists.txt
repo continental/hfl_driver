@@ -22,12 +22,6 @@ find_package(catkin REQUIRED COMPONENTS
   udp_com
 )
 
-generate_messages(
-  DEPENDENCIES 
-  std_msgs
-  geometry_msgs
-)
-
 generate_dynamic_reconfigure_options(
   cfg/HFL.cfg
 )
@@ -47,7 +41,6 @@ catkin_package(
   image_transport
   image_geometry
   camera_info_manager
-  message_generation
   udp_com
 )
 
