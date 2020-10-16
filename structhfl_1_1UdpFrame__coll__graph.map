@@ -1,0 +1,7 @@
+<map id="hfl::UdpFrame" name="hfl::UdpFrame">
+<area shape="rect" id="node1" title="HFL110DCU v1 ethernet frame struct." alt="" coords="311,81,413,108"/>
+<area shape="rect" id="node2" href="$structhfl_1_1CameraExtrinsics.html" title="HFL110DCU v1 ethernet extrinsics struct." alt="" coords="8,5,151,32"/>
+<area shape="rect" id="node3" href="$structhfl_1_1PointCloudReturn.html" title="HFL110DCU v1 frame struct." alt="" coords="8,56,151,83"/>
+<area shape="rect" id="node4" href="$structhfl_1_1CameraIntrinsics.html" title="HFL110DCU v1 ethernet extrinsics struct." alt="" coords="10,107,149,133"/>
+<area shape="rect" id="node5" href="$structhfl_1_1UdpPacketHeader.html" title="HFL110DCU v1 ethernet packet header struct." alt="" coords="5,157,153,184"/>
+</map>

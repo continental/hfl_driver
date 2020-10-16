@@ -1,0 +1,7 @@
+<map id="hfl::hflObj" name="hfl::hflObj">
+<area shape="rect" id="node1" title="HFL110DCU v1 ethernet object struct." alt="" coords="180,95,255,121"/>
+<area shape="rect" id="node2" href="$structhfl_1_1objDyn.html" title="HFL110DCU v1 object dynamic property." alt="" coords="5,5,85,32"/>
+<area shape="rect" id="node3" href="$structhfl_1_1objState.html" title="HFL110DCU v1 object state." alt="" coords="115,5,205,32"/>
+<area shape="rect" id="node4" href="$structhfl_1_1objKin.html" title="HFL110DCU v1 object kinematics." alt="" coords="229,5,307,32"/>
+<area shape="rect" id="node5" href="$structhfl_1_1objGeo.html" title="HFL110DCU v1 object geometry." alt="" coords="331,5,413,32"/>
+</map>
