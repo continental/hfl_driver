@@ -36,7 +36,6 @@
 #ifndef IMAGE_PROCESSOR__HFL110DCU_H_
 #define IMAGE_PROCESSOR__HFL110DCU_H_
 
-#include <hfl_driver/ToFImage.h>
 #include <base_hfl110dcu.h>
 
 #include <angles/angles.h>
