@@ -39,7 +39,7 @@
 #include <vector>
 #include <cmath>
 
-// Note: the initMatrix function in this file was originally written for
+// Note: the initTransform function in this file was originally written for
 // the depth_image_proc ROS package and is included here instead. Full credit
 // of development goes to the authors of that package and use of it in this
 // package was granted by one of the authors since it is not a static function:
@@ -59,29 +59,52 @@ HFL110DCU::HFL110DCU(std::string model, std::string version,
 
   // Initialize header messages
   frame_header_message_.reset(new std_msgs::Header());
+  pdm_header_message_.reset(new std_msgs::Header());
   object_header_message_.reset(new std_msgs::Header());
+  tele_header_message_.reset(new std_msgs::Header());
+  slice_header_message_.reset(new std_msgs::Header());
   tf_header_message_.reset(new std_msgs::Header());
-
+  
   ros::NodeHandle image_depth_nh(node_handler_, "depth");
   ros::NodeHandle image_intensity_16b_nh(node_handler_, "intensity");
   ros::NodeHandle image_depth2_nh(node_handler_, "depth2");
   ros::NodeHandle image_intensity2_16b_nh(node_handler_, "intensity2");
   ros::NodeHandle image_intensity_8b_nh(node_handler_, "intensity8");
   ros::NodeHandle objects_nh(node_handler_, "perception");
+  ros::NodeHandle flag_nh(node_handler_, "flags");
+  ros::NodeHandle ct_nh(flag_nh, "crosstalk");
+  ros::NodeHandle ct2_nh(flag_nh, "crosstalk2");
+  ros::NodeHandle sat_nh(flag_nh, "saturated");
+  ros::NodeHandle sat2_nh(flag_nh, "saturated2");
+  ros::NodeHandle si_nh(flag_nh, "si");
+  ros::NodeHandle si2_nh(flag_nh, "si2");
 
   image_transport::ImageTransport it_depth(image_depth_nh);
   image_transport::ImageTransport it_depth2(image_depth2_nh);
   image_transport::ImageTransport it_intensity_16b(image_intensity_16b_nh);
   image_transport::ImageTransport it_intensity2_16b(image_intensity2_16b_nh);
   image_transport::ImageTransport it_intensity_8b(image_intensity_8b_nh);
+  image_transport::ImageTransport it_ct(ct_nh);
+  image_transport::ImageTransport it_ct2(ct2_nh);
+  image_transport::ImageTransport it_sat(sat_nh);
+  image_transport::ImageTransport it_sat2(sat2_nh);
+  image_transport::ImageTransport it_si(si_nh);
+  image_transport::ImageTransport it_si2(si2_nh);
 
   // Initialize publishers
   pub_depth_ = it_depth.advertiseCamera("image_raw", 100);
   pub_intensity_ = it_intensity_16b.advertiseCamera("image_raw", 100);
   pub_depth2_ = it_depth2.advertiseCamera("image_raw", 100);
   pub_intensity2_ = it_intensity2_16b.advertiseCamera("image_raw", 100);
+  pub_ct_ = it_ct.advertiseCamera("image_raw", 100);
+  pub_ct2_ = it_ct2.advertiseCamera("image_raw", 100);
+  pub_sat_ = it_sat.advertiseCamera("image_raw", 100);
+  pub_sat2_ = it_sat2.advertiseCamera("image_raw", 100);
+  pub_si_ = it_si.advertiseCamera("image_raw", 100);
+  pub_si2_ = it_si2.advertiseCamera("image_raw", 100);
   pub_objects_ = objects_nh.advertise<visualization_msgs::MarkerArray>("objects", 100);
   pub_points_ = node_handler_.advertise<sensor_msgs::PointCloud2>("points", 1000);
+  pub_slices_ = node_handler_.advertise<std_msgs::UInt16MultiArray>("slices", 1000);
 
   std::string default_calib_file = "~/.ros/camera_info/default.yaml";
 
@@ -89,9 +112,17 @@ HFL110DCU::HFL110DCU(std::string model, std::string version,
   camera_info_manager_ =
     new camera_info_manager::CameraInfoManager(image_intensity_16b_nh, frame_id);
 
+  // Initalize diagnostic device ID, later on this should update with serial number, if available
+  updater_.setHardwareIDf("%s", frame_id);
+  // Add diagnostic updater callback
+  updater_.add("HFL110 Updater", this, &HFL110DCU::update_diagnostics);
+
   // Initialize Message Headers
   frame_header_message_->frame_id = frame_id;
   frame_header_message_->seq = -1;
+  pdm_header_message_ = frame_header_message_;
+  tele_header_message_ = frame_header_message_;
+  slice_header_message_ = frame_header_message_;
   object_header_message_->frame_id = "map";  // TODO(flynneva): make this a ROS parameter
   object_header_message_->seq = -1;
   tf_header_message_->frame_id = "map";
@@ -105,7 +136,7 @@ bool HFL110DCU::parseFrame(int start_byte, const std::vector<uint8_t>& packet)
 
   float range_1, range_2, temp_range = 0;
   uint16_t intensity_1, intensity_2 = 0;
-  uint8_t type, ch = 0;
+  uint8_t classification, ch = 0;
 
   // Build up range and intensity images
   for (col_ = 0; col_ < FRAME_COLUMNS; col_ += 1)
@@ -134,75 +165,25 @@ bool HFL110DCU::parseFrame(int start_byte, const std::vector<uint8_t>& packet)
     if (range_2 > 49.0)
       range_2 = NAN;
 
-    // add in individual channel offsets
-    if (ch == 0) {
-      range_1 += ch1_offset_;
-      range_2 += ch1_offset_;
-    } else if (ch == 1) {
-      range_1 += ch2_offset_;
-      range_2 += ch2_offset_;
-    } else if (ch == 2) {
-      range_1 += ch3_offset_;
-      range_2 += ch3_offset_;
-    } else if (ch == 3) {
-      range_1 += ch4_offset_;
-      range_2 += ch4_offset_;
-    }
-
-    // add in individual intensity offsets
-    if (intensity_1 < 500) {
-      range_1 += int500_offset_;
-    } else if (intensity_1 < 1000) {
-      range_1 += int1000_offset_;
-    } else if (intensity_1 < 1500) {
-      range_1 += int1500_offset_;
-    } else if (intensity_1 < 2000) {
-      range_1 += int2000_offset_;
-    } else if (intensity_1 < 2500) {
-      range_1 += int2500_offset_;
-    } else if (intensity_1 < 3000) {
-      range_1 += int3000_offset_;
-    } else if (intensity_1 < 3500) {
-      range_1 += int3500_offset_;
-    } else if (intensity_1 <= 4096) {
-      range_1 += int4096_offset_;
-    }
-
-    if (intensity_2 < 500) {
-      range_2 += int500_offset_;
-    } else if (intensity_2 < 1000) {
-      range_2 += int1000_offset_;
-    } else if (intensity_2 < 1500) {
-      range_2 += int1500_offset_;
-    } else if (intensity_2 < 2000) {
-      range_2 += int2000_offset_;
-    } else if (intensity_2 < 2500) {
-      range_2 += int2500_offset_;
-    } else if (intensity_2 < 3000) {
-      range_2 += int3000_offset_;
-    } else if (intensity_2 < 3500) {
-      range_2 += int3500_offset_;
-    } else if (intensity_2 <= 4096) {
-      range_2 += int4096_offset_;
-    }
-
     p_image_depth_->image.at<float>(cv::Point(col_, row_)) = range_1;
     p_image_depth2_->image.at<float>(cv::Point(col_, row_)) = range_2;
 
     p_image_intensity_->image.at<uint16_t>(cv::Point(col_, row_)) = intensity_1;
     p_image_intensity2_->image.at<uint16_t>(cv::Point(col_, row_)) = intensity_2;
 
-    // Byte offset for type flags
-    // Type array indicates status of pixel
-    byte_offset = start_byte + 1024 + col_;
+    // Byte offset for classification flags
+    byte_offset = start_byte + 1152 + col_;
 
-    type = big_to_native(*reinterpret_cast<const uint8_t*>(&packet[byte_offset]));
-    // ROS_INFO("OPTICAL_CT:      %i", ((type >> 4) & 1));
-    // ROS_INFO("SUPERIMPOSED_CT: %i", ((type >> 3) & 1));
-    // ROS_INFO("VALID_PULSE:     %i", ((type >> 2) & 1));
-    // ROS_INFO("SATURATED:       %i", ((type >> 1) & 1));
-    // ROS_INFO("CROSSTALK:       %i", ((type >> 0) & 1));
-    // ROS_INFO("type offset: %i", byte_offset);
+    classification = big_to_native(*reinterpret_cast<const uint8_t*>(&packet[byte_offset]));
+    
+    p_image_crosstalk_->image.at<uint8_t>(cv::Point(col_, row_)) = ((classification >> 0) & 1) * 255;
+    p_image_saturated_->image.at<uint8_t>(cv::Point(col_, row_)) = ((classification >> 1) & 1) * 255;
+    p_image_superimposed_->image.at<uint8_t>(cv::Point(col_, row_)) = ((classification >> 3) & 1) * 255;
+    
+    p_image_crosstalk2_->image.at<uint8_t>(cv::Point(col_, row_)) = ((classification >> 4) & 1) * 255;
+    p_image_saturated2_->image.at<uint8_t>(cv::Point(col_, row_)) = ((classification >> 5) & 1) * 255;
+    p_image_superimposed2_->image.at<uint8_t>(cv::Point(col_, row_)) = ((classification >> 7) & 1) * 255;
+
     if (ch < 3) {
       ch += 1;
     } else {
@@ -243,16 +224,19 @@ bool HFL110DCU::processFrameData(const std::vector<uint8_t>& frame_data)
       // Set Pointcloud message
       pointcloud_.reset(new sensor_msgs::PointCloud2());
       pointcloud_->header = *frame_header_message_;
-      pointcloud_->height = FRAME_ROWS * 2;
+      pointcloud_->height = FRAME_ROWS;
       pointcloud_->width = FRAME_COLUMNS * 2;
 
       sensor_msgs::PointCloud2Modifier modifier(*pointcloud_);
-      modifier.setPointCloud2Fields(5,
+      modifier.setPointCloud2Fields(8,
         "x", 1, sensor_msgs::PointField::FLOAT32,
         "y", 1, sensor_msgs::PointField::FLOAT32,
         "z", 1, sensor_msgs::PointField::FLOAT32,
         "intensity", 1, sensor_msgs::PointField::FLOAT32,
-        "return", 1, sensor_msgs::PointField::UINT8);
+        "return", 1, sensor_msgs::PointField::UINT8,
+        "crosstalk", 1, sensor_msgs::PointField::UINT8,
+        "saturated", 1, sensor_msgs::PointField::UINT8,
+        "superimposed", 1, sensor_msgs::PointField::UINT8);
 
       // Reset image pointers
       p_image_depth_.reset(new cv_bridge::CvImage);
@@ -271,6 +255,26 @@ bool HFL110DCU::processFrameData(const std::vector<uint8_t>& frame_data)
       p_image_intensity2_->encoding = sensor_msgs::image_encodings::TYPE_16UC1;
       p_image_intensity2_->image = cv::Mat(FRAME_ROWS, FRAME_COLUMNS, CV_16UC1);
 
+      p_image_crosstalk_.reset(new cv_bridge::CvImage);
+      p_image_crosstalk_->encoding = sensor_msgs::image_encodings::TYPE_8UC1;
+      p_image_crosstalk_->image = cv::Mat(FRAME_ROWS, FRAME_COLUMNS, CV_8UC1);
+      p_image_saturated_.reset(new cv_bridge::CvImage);
+      p_image_saturated_->encoding = sensor_msgs::image_encodings::TYPE_8UC1;
+      p_image_saturated_->image = cv::Mat(FRAME_ROWS, FRAME_COLUMNS, CV_8UC1);
+      p_image_superimposed_.reset(new cv_bridge::CvImage);
+      p_image_superimposed_->encoding = sensor_msgs::image_encodings::TYPE_8UC1;
+      p_image_superimposed_->image = cv::Mat(FRAME_ROWS, FRAME_COLUMNS, CV_8UC1);
+      
+      p_image_crosstalk2_.reset(new cv_bridge::CvImage);
+      p_image_crosstalk2_->encoding = sensor_msgs::image_encodings::TYPE_8UC1;
+      p_image_crosstalk2_->image = cv::Mat(FRAME_ROWS, FRAME_COLUMNS, CV_8UC1);
+      p_image_saturated2_.reset(new cv_bridge::CvImage);
+      p_image_saturated2_->encoding = sensor_msgs::image_encodings::TYPE_8UC1;
+      p_image_saturated2_->image = cv::Mat(FRAME_ROWS, FRAME_COLUMNS, CV_8UC1);
+      p_image_superimposed2_.reset(new cv_bridge::CvImage);
+      p_image_superimposed2_->encoding = sensor_msgs::image_encodings::TYPE_8UC1;
+      p_image_superimposed2_->image = cv::Mat(FRAME_ROWS, FRAME_COLUMNS, CV_8UC1);
+      
       // Get intrinsic and extrinsic calibration parameters
       // CameraIntrinsics * camera_intrinsics;
       float fx = *reinterpret_cast<const float*>(&frame_data[20]);
@@ -294,20 +298,35 @@ bool HFL110DCU::processFrameData(const std::vector<uint8_t>& frame_data)
 
       float intrinsic_yaw = *reinterpret_cast<const float*>(&frame_data[56]);
       float intrinsic_pitch = *reinterpret_cast<const float*>(&frame_data[60]);
-      float extrinsic_yaw = *reinterpret_cast<const float*>(&frame_data[64]) - 1.5708;
+      float extrinsic_yaw = *reinterpret_cast<const float*>(&frame_data[64]);
       float extrinsic_pitch = *reinterpret_cast<const float*>(&frame_data[68]);
-      float extrinsic_roll = *reinterpret_cast<const float*>(&frame_data[72]) - 1.5708;
+      float extrinsic_roll = *reinterpret_cast<const float*>(&frame_data[72]);
       float extrinsic_z = *reinterpret_cast<const float*>(&frame_data[76]);
       float extrinsic_y = *reinterpret_cast<const float*>(&frame_data[80]);
       float extrinsic_x = *reinterpret_cast<const float*>(&frame_data[84]);
 
+      ROS_INFO_ONCE("Extrinsics received from DCU:");
+      ROS_INFO_ONCE("    x: %f", extrinsic_x);
+      ROS_INFO_ONCE("    y: %f", extrinsic_y);
+      ROS_INFO_ONCE("    z: %f", extrinsic_z);
+      ROS_INFO_ONCE("    r: %f", extrinsic_roll);
+      ROS_INFO_ONCE("    p: %f", extrinsic_pitch);
+      ROS_INFO_ONCE("    y: %f", extrinsic_yaw);
+
       // set extrinsics to global tf
-      tf2::Quaternion q;
+      tf2::Quaternion q_orig, q_rot, q_final;
+
+      // Output extrinsics are in AUTOSAR format, rotate to match ROS standard
+      double r=-1.5707, p=0.0, y=-1.5707;
+      q_rot.setRPY(r, p, y);
+
       global_tf_.transform.translation.x = extrinsic_x;
       global_tf_.transform.translation.y = extrinsic_y;
       global_tf_.transform.translation.z = extrinsic_z;
-      q.setRPY(extrinsic_roll, extrinsic_pitch, extrinsic_yaw);
-      global_tf_.transform.rotation = tf2::toMsg(q);  // q.x();
+      q_orig.setRPY(extrinsic_roll, extrinsic_pitch, extrinsic_yaw);
+      q_final = q_orig * q_rot;  // Calculate actual orientation
+      q_final.normalize();
+      global_tf_.transform.rotation = tf2::toMsg(q_final);
 
       // check camera info manager
       if (camera_info_manager_ != NULL)
@@ -374,12 +393,28 @@ bool HFL110DCU::processFrameData(const std::vector<uint8_t>& frame_data)
       pub_depth2_.publish(p_image_depth2_->toImageMsg(), flash_cam_info);
       pub_intensity2_.publish(p_image_intensity2_->toImageMsg(), flash_cam_info);
 
+      p_image_crosstalk_->header = *frame_header_message_;
+      p_image_crosstalk2_->header = *frame_header_message_;
+      p_image_saturated_->header = *frame_header_message_;
+      p_image_saturated2_->header = *frame_header_message_;
+      p_image_superimposed_->header = *frame_header_message_;
+      p_image_superimposed2_->header = *frame_header_message_;
+     
+      pub_ct_.publish(p_image_crosstalk_->toImageMsg(), flash_cam_info);
+      pub_ct2_.publish(p_image_crosstalk2_->toImageMsg(), flash_cam_info);
+      pub_sat_.publish(p_image_saturated_->toImageMsg(), flash_cam_info);
+      pub_sat2_.publish(p_image_saturated2_->toImageMsg(), flash_cam_info);
+      pub_si_.publish(p_image_superimposed_->toImageMsg(), flash_cam_info);
+      pub_si2_.publish(p_image_superimposed2_->toImageMsg(), flash_cam_info);
       // iterators
       sensor_msgs::PointCloud2Iterator<float> out_x(*pointcloud_, "x");
       sensor_msgs::PointCloud2Iterator<float> out_y(*pointcloud_, "y");
       sensor_msgs::PointCloud2Iterator<float> out_z(*pointcloud_, "z");
       sensor_msgs::PointCloud2Iterator<float> out_i(*pointcloud_, "intensity");
       sensor_msgs::PointCloud2Iterator<uint8_t> out_r(*pointcloud_, "return");
+      sensor_msgs::PointCloud2Iterator<uint8_t> out_ct(*pointcloud_, "crosstalk");
+      sensor_msgs::PointCloud2Iterator<uint8_t> out_sat(*pointcloud_, "saturated");
+      sensor_msgs::PointCloud2Iterator<uint8_t> out_si(*pointcloud_, "superimposed");
 
       // loop through rows and cols
       for (row_ = 0; row_ < FRAME_ROWS; row_ += 1)
@@ -396,12 +431,18 @@ bool HFL110DCU::processFrameData(const std::vector<uint8_t>& frame_data)
           *out_z = cvPoint(2);
           *out_i = p_image_intensity_->image.at<uint16_t>(cv::Point(col_, row_));
           *out_r = 1;
+          *out_ct = p_image_crosstalk_->image.at<uint8_t>(cv::Point(col_, row_));
+          *out_sat = p_image_saturated_->image.at<uint8_t>(cv::Point(col_, row_));
+          *out_si = p_image_superimposed_->image.at<uint8_t>(cv::Point(col_, row_));
 
           out_x += 1;
           out_y += 1;
           out_z += 1;
           out_i += 1;
           out_r += 1;
+          out_ct += 1;
+          out_sat += 1;
+          out_si += 1;
 
           // Return 2
           const cv::Vec3f &cvPoint2 = transform_.at<cv::Vec3f>(col_, row_) *
@@ -412,12 +453,18 @@ bool HFL110DCU::processFrameData(const std::vector<uint8_t>& frame_data)
           *out_z = cvPoint2(2);
           *out_i = p_image_intensity2_->image.at<uint16_t>(cv::Point(col_, row_));
           *out_r = 2;
+          *out_ct = p_image_crosstalk2_->image.at<uint8_t>(cv::Point(col_, row_));
+          *out_sat = p_image_saturated2_->image.at<uint8_t>(cv::Point(col_, row_));
+          *out_si = p_image_superimposed2_->image.at<uint8_t>(cv::Point(col_, row_));
 
           out_x += 1;
           out_y += 1;
           out_z += 1;
           out_i += 1;
           out_r += 1;
+          out_ct += 1;
+          out_sat += 1;
+          out_si += 1;
         }
       }
 
@@ -625,6 +672,54 @@ bool HFL110DCU::processObjectData(const std::vector<uint8_t>& object_data)
   return true;
 }
 
+bool HFL110DCU::processTelemetryData(const std::vector<uint8_t>& tele_data)
+{
+  // grab the time when recieved packet
+  tele_header_message_->stamp = ros::Time::now();
+  tele_header_message_->seq += 1;
+
+  telem_.uiHardwareRevision = 
+    (big_to_native(*reinterpret_cast<const uint32_t*>(&tele_data[0])));
+  telem_.fSensorTemp =
+    (*reinterpret_cast<const float*>(&tele_data[4]));
+  telem_.fHeaterTemp =
+    (-*reinterpret_cast<const float*>(&tele_data[8]));
+  telem_.uiFrameCounter =
+    (big_to_native(*reinterpret_cast<const uint32_t*>(&tele_data[12])));
+  telem_.fADCUbattSW =
+    (*reinterpret_cast<const float*>(&tele_data[16]));
+  telem_.fADCUbatt =
+    (*reinterpret_cast<const float*>(&tele_data[20]));
+  telem_.fADCHeaterLens =
+    (*reinterpret_cast<const float*>(&tele_data[24]));
+  telem_.fADCHeaterLensHigh =
+    (*reinterpret_cast<const float*>(&tele_data[28]));
+  telem_.fADCTemp0Lens =
+    (*reinterpret_cast<const float*>(&tele_data[32]));
+  telem_.fAcquisitionPeriod =
+    (*reinterpret_cast<const float*>(&tele_data[36]));
+  telem_.uiTempSensorFeedback =
+    (unsigned(*reinterpret_cast<const uint8_t*>(&tele_data[40])));
+  
+  for (int i = 25; i >= 0; i--)
+  {
+    telem_.au8SerialNumber[25 - i] =
+      (*reinterpret_cast<const char*>(&tele_data[41 + i]));
+  }
+
+  //ROS_INFO("sensor temp: %u", *reinterpret_cast<const uint8_t*>(&tele_data[40]));
+
+  // update diagnostics
+  updater_.update();
+  return true;
+}
+
+bool HFL110DCU::processSliceData(const std::vector<uint8_t>& slice_data)
+{
+  // INTERNAL
+  return true;
+}
+
 cv::Mat HFL110DCU::initTransform(cv::Mat cameraMatrix, cv::Mat distCoeffs,
                                      int width, int height, bool radial)
 {
@@ -666,4 +761,29 @@ cv::Mat HFL110DCU::initTransform(cv::Mat cameraMatrix, cv::Mat distCoeffs,
   }
   return pixelVectors.reshape(3, width);
 }
+
+void HFL110DCU::update_diagnostics(diagnostic_updater::DiagnosticStatusWrapper &stat)
+{
+  updater_.setHardwareIDf("%s-%s", frame_header_message_->frame_id.c_str(), telem_.au8SerialNumber);
+  
+  // put telemetry data in diagnostic msg
+  stat.add("uiHardwareRevision", telem_.uiHardwareRevision);
+  stat.add("fSensorTemp", telem_.fSensorTemp);
+  stat.add("fHeaterTemp", telem_.fHeaterTemp);
+  stat.add("uiFrameCounter", telem_.uiFrameCounter);
+  stat.add("fADCUbattSW", telem_.fADCUbattSW);
+  stat.add("fADCUbatt", telem_.fADCUbatt);
+  stat.add("fADCHeaterLens", telem_.fADCHeaterLens);
+  stat.add("fADCHeaterLensHigh", telem_.fADCHeaterLensHigh);
+  stat.add("fADCTemp0Lens", telem_.fADCTemp0Lens);
+  stat.add("fAcquisitionPeriod", telem_.fAcquisitionPeriod);
+  stat.add("uiTempSensorFeedback", telem_.uiTempSensorFeedback);
+  // TODO(flynneva): should reset HardwareID using this serial number
+  stat.add("au8SerialNumber", telem_.au8SerialNumber);
+
+  // TODO(flynneva): add some logic here to check if everything is ok
+  stat.level = diagnostic_msgs::DiagnosticStatus::OK;
+  stat.message = "OK";
+}
+
 }  // namespace hfl

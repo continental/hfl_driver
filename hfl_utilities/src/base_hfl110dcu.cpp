@@ -68,8 +68,6 @@ bool BaseHFL110DCU::getConfiguration(std::string model, std::string version)
   frame_.reset(new Frame(FRAME_ROWS, FRAME_COLUMNS, PIXEL_RETURNS, PIXEL_SLICES));
   frame_->intensity_bits_ = INTENSITY_BITS;
   frame_->range_bits_ = RANGE_BITS;
-  frame_->range_precision_bits_ = RANGE_PRECISION_BITS;
-  frame_->intensity_publish_bits_ = INTENSITY_PUBLISH_BITS;
   frame_->id_ = FRAME_ID;
   // frame_ changed to frame_ as referenced in the hfl_interface.h class
   return true;
@@ -81,66 +79,6 @@ bool BaseHFL110DCU::setGlobalRangeOffset(double offset)
     global_offset_ = offset * 256;
     return true;
   } catch (const std::exception& e) {
-    return false;
-  }
-}
-
-bool BaseHFL110DCU::setChannelRangeOffset(uint8_t ch, double offset)
-{
-  try {
-    switch(ch)
-    {
-      case 0:
-        ch1_offset_ = offset;
-        break;
-      case 1:
-        ch2_offset_ = offset;
-        break;
-      case 2:
-        ch3_offset_ = offset;
-        break;
-      case 3:
-        ch4_offset_ = offset;
-        break;
-    }
-    return true;
-  } catch ( const std::exception& e) {
-    return false;
-  }
-}
-
-bool BaseHFL110DCU::setIntensityRangeOffset(uint8_t band, double offset)
-{
-  try {
-    switch(band)
-    {
-      case 0:
-        int500_offset_ = offset;
-        break;
-      case 1:
-        int1000_offset_ = offset;
-        break;
-      case 2:
-        int1500_offset_ = offset;
-        break;
-      case 3:
-        int2000_offset_ = offset;
-        break;
-      case 4:
-        int2500_offset_ = offset;
-        break;
-      case 5:
-        int3000_offset_ = offset;
-        break;
-      case 6:
-        int3500_offset_ = offset;
-        break;
-      case 7:
-        int4096_offset_ = offset;
-        break;
-    }
-    return true;
-  } catch ( const std::exception& e) {
     return false;
   }
 }

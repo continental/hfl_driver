@@ -68,8 +68,10 @@ enum error_codes
 {
   no_error = 0,
   frame_socket_error,
+  pdm_socket_error,
   object_socket_error,
-  lut_socket_error
+  tele_socket_error,
+  slice_socket_error
 };
 
 ///
@@ -124,12 +126,18 @@ private:
   /// UDP Frame Data subscriber
   ros::Subscriber frame_data_subscriber_;
 
+  /// UDP PDM Data Subscriber
+  ros::Subscriber pdm_data_subscriber_;
+
   /// UDP Object Data Subscriber
   ros::Subscriber object_data_subscriber_;
 
-  /// UDP LUT Data Subscriber
-  ros::Subscriber lut_data_subscriber_;
-
+  /// UDP Telemetry Data Subscriber
+  ros::Subscriber tele_data_subscriber_;
+  
+  /// UDP Slice Data Subscriber
+  ros::Subscriber slice_data_subscriber_;
+  
   /// UDP send service client
   ros::ServiceClient udp_send_service_client_;
 
@@ -162,10 +170,19 @@ private:
 
   /// Frame Data UDP port
   int frame_data_port_;
+  
+  /// PDM Data UDP port
+  int pdm_data_port_;
 
   /// Object Data UDP port
   int object_data_port_;
 
+  /// Telemetry Data UDP port
+  int tele_data_port_;
+  
+  /// Slice Data UDP port
+  int slice_data_port_;
+  
   /// Pointer to Flash camera
   std::shared_ptr<hfl::HflInterface> flash_;
 
@@ -187,7 +204,7 @@ private:
   bool setFlash();
 
   ///
-  /// Callback for UDP frame data packets.
+  /// Callback for frame data UDP packets.
   ///
   /// Receives the frame data messages for parsing
   /// through IP addresses validation.
@@ -199,7 +216,19 @@ private:
   void frameDataCallback(const udp_com::UdpPacket& udp_packet);
 
   ///
-  /// Callback for UDP object data packets
+  /// Callback for performance degredation module (PDM) data UDP packets
+  ///
+  /// Receives the PDM data messages for parsing
+  /// through IP addresses validation
+  ///
+  /// @param[in] udp_packet UDP packet message
+  ///
+  /// @return void
+  ///
+  void pdmDataCallback(const udp_com::UdpPacket& udp_packet);
+  
+  ///
+  /// Callback for object data UDP packets
   ///
   /// Receives the object data messages for parsing
   /// through IP addresses validation
@@ -211,17 +240,29 @@ private:
   void objectDataCallback(const udp_com::UdpPacket& udp_packet);
 
   ///
-  /// Callback for UDP LUT data packets
+  /// Callback for telemetry data UDP packets
   ///
-  /// Receives the lut data messages for parsing
+  /// Receives the telemetry data messages for parsing
   /// through IP addresses validation
   ///
   /// @param[in] udp_packet UDP packet message
   ///
   /// @return void
   ///
-  void lutDataCallback(const udp_com::UdpPacket& udp_packet);
-
+  void teleDataCallback(const udp_com::UdpPacket& udp_packet);
+  
+  ///
+  /// Callback for slice data UDP packets
+  ///
+  /// Receives the slice data messages for parsing
+  /// through IP addresses validation
+  ///
+  /// @param[in] udp_packet UDP packet message
+  ///
+  /// @return void
+  ///
+  void sliceDataCallback(const udp_com::UdpPacket& udp_packet);
+  
   ///
   /// Uses the udp_com service binded send function for
   /// command sending
