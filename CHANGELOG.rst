@@ -2,6 +2,38 @@
 Changelog for package hfl_driver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request `#74 <https://github.com/continental/hfl_driver/issues/74>`_ from flynneva/fix/extrinsics_quaternion
+* remove kinetic from CI due to EOL
+* rotation fix, pointcloud size fix, telemetry parsing
+* Merge pull request `#73 <https://github.com/continental/hfl_driver/issues/73>`_ from continental/ros1/main
+* Merge pull request `#72 <https://github.com/continental/hfl_driver/issues/72>`_ from continental/ros1/devel
+* bump ros actions
+* Merge pull request `#71 <https://github.com/continental/hfl_driver/issues/71>`_ from continental/ros1/devel
+* Merge pull request `#70 <https://github.com/continental/hfl_driver/issues/70>`_ from continental/ros1/devel
+* fixed documentation
+* Merge pull request `#69 <https://github.com/continental/hfl_driver/issues/69>`_ from continental/remove_legacy_code
+* removed include tof
+* removed msg gen
+* removed legacy code & clean up cmakelist
+* Merge pull request `#68 <https://github.com/continental/hfl_driver/issues/68>`_ from continental/ros1/devel
+* fix some links in readme
+* Merge pull request `#67 <https://github.com/continental/hfl_driver/issues/67>`_ from continental/ros1/devel
+* Merge pull request `#66 <https://github.com/continental/hfl_driver/issues/66>`_ from continental/ros1/devel
+* add link to continentals website
+* Merge pull request `#65 <https://github.com/continental/hfl_driver/issues/65>`_ from continental/ros1/devel
+* add note to readme
+* Merge pull request `#64 <https://github.com/continental/hfl_driver/issues/64>`_ from continental/ros1/devel
+* update readme
+* Merge pull request `#63 <https://github.com/continental/hfl_driver/issues/63>`_ from continental/release-0.0.20
+* Merge pull request `#62 <https://github.com/continental/hfl_driver/issues/62>`_ from continental/release-0.0.20
+* Merge pull request `#59 <https://github.com/continental/hfl_driver/issues/59>`_ from continental/release-0.0.19
+* Merge pull request `#55 <https://github.com/continental/hfl_driver/issues/55>`_ from continental/release-0.0.18
+* Merge pull request `#51 <https://github.com/continental/hfl_driver/issues/51>`_ from continental/release-0.0.18
+* Merge pull request `#48 <https://github.com/continental/hfl_driver/issues/48>`_ from continental/ros1/devel
+* Contributors: Evan Flynn, flynneva
+
 0.0.20 (2020-09-15)
 -------------------
 * fixed package.xml for rosdep install
