@@ -50,10 +50,13 @@
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <tf2_ros/transform_broadcaster.h>
 #include <geometry_msgs/Point.h>
+#include <std_msgs/UInt16MultiArray.h>
 #include <sensor_msgs/PointCloud2.h>
 #include <sensor_msgs/point_cloud2_iterator.h>
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
+#include <diagnostic_updater/diagnostic_updater.h>
+#include <diagnostic_updater/publisher.h>
 
 #include <string>
 #include <vector>
@@ -203,6 +206,23 @@ struct hflObj
   uint8_t confidence;
 };
 
+/// @brief HFL110DCU v1 telemetry struct
+struct telemetry
+{
+  uint32_t uiHardwareRevision;
+  float fSensorTemp;
+  float fHeaterTemp;
+  uint32_t uiFrameCounter;
+  float fADCUbattSW;
+  float fADCUbatt;
+  float fADCHeaterLens;
+  float fADCHeaterLensHigh;
+  float fADCTemp0Lens;
+  float fAcquisitionPeriod;
+  unsigned uiTempSensorFeedback;
+  char au8SerialNumber[26];
+};
+
 ///
 /// @brief Implements the HFL110DCU camera image parsing and publishing.
 ///
@@ -239,6 +259,24 @@ public:
   bool processFrameData(const std::vector<uint8_t>& data) override;
 
   ///
+  /// Parse out pdm data from packet
+  ///
+  /// @param[in] starting byte, packet to parse
+  ///
+  /// @return bool true if successfully parsed packet
+  ///
+  //bool parsePDM(int start_byte, const std::vector<uint8_t>& packet) override;
+  
+  ///
+  /// Process performance degredation module (PDM) data from udp packets.
+  ///
+  /// @param[in] data pdm data array
+  ///
+  /// @return bool true if successful
+  ///
+  //bool processPDMData(const std::vector<uint8_t>& data) override;
+  
+  ///
   /// Parse packet into objects
   ///
   /// @param[in] start_byte starting byte, packet packet data to parse
@@ -257,8 +295,29 @@ public:
   bool processObjectData(const std::vector<uint8_t>& data) override;
 
   ///
+  /// Process the telemetry data from udp packets
+  ///
+  /// @param[in] data telemetry data
+  ///
+  /// @return bool
+  ///
+  bool processTelemetryData(const std::vector<uint8_t>& data) override;
+  
+  ///
+  /// Process the slice data from udp packets
+  ///
+  /// @param[in] data slice data
+  ///
+  /// @return bool
+  ///
+  bool processSliceData(const std::vector<uint8_t>& data) override;
+  
+  ///
   cv::Mat initTransform(cv::Mat cameraMatrix, cv::Mat distCoeffs,
       int width, int height, bool radial);
+
+  ///
+  void update_diagnostics(diagnostic_updater::DiagnosticStatusWrapper &stat);
 
 private:
   /// ROS node handler
@@ -270,9 +329,18 @@ private:
   /// Frame Header message
   std::shared_ptr<std_msgs::Header> frame_header_message_;
 
+  /// PDM Header message
+  std::shared_ptr<std_msgs::Header> pdm_header_message_;
+  
   /// Object Header message
   std::shared_ptr<std_msgs::Header> object_header_message_;
+  
+  /// Telemetry Header message
+  std::shared_ptr<std_msgs::Header> tele_header_message_;
 
+  /// Slice Header message
+  std::shared_ptr<std_msgs::Header> slice_header_message_;
+  
   /// TF Header message
   std::shared_ptr<std_msgs::Header> tf_header_message_;
 
@@ -294,6 +362,30 @@ private:
   /// Pointer to 16 bit intensity image
   cv_bridge::CvImagePtr p_image_intensity_;
 
+  /// Pointer to depth image second return
+  cv_bridge::CvImagePtr p_image_depth2_;
+
+  /// Pointer to 16 bit intensity image second return
+  cv_bridge::CvImagePtr p_image_intensity2_;
+  
+  /// Pointer to crosstalk flags
+  cv_bridge::CvImagePtr p_image_crosstalk_;
+  
+  /// Pointer to saturated flags
+  cv_bridge::CvImagePtr p_image_saturated_;
+  
+  /// Pointer to superimposed flags
+  cv_bridge::CvImagePtr p_image_superimposed_;
+  
+  /// Pointer to crosstalk2 flags
+  cv_bridge::CvImagePtr p_image_crosstalk2_;
+  
+  /// Pointer to saturated2 flags
+  cv_bridge::CvImagePtr p_image_saturated2_;
+  
+  /// Pointer to superimposed2 flags
+  cv_bridge::CvImagePtr p_image_superimposed2_;
+  
   /// Depth image publisher
   image_transport::CameraPublisher pub_depth_;
 
@@ -306,29 +398,54 @@ private:
   /// 16 bit Intensity image publisher return 2
   image_transport::CameraPublisher pub_intensity2_;
 
+  /// Crosstalk flag image publisher
+  image_transport::CameraPublisher pub_ct_;
+  
+  /// Crosstalk2 flag image publisher
+  image_transport::CameraPublisher pub_ct2_;
+  
+  /// Saturated flag image publisher
+  image_transport::CameraPublisher pub_sat_;
+  
+  /// Saturated2 flag image publisher
+  image_transport::CameraPublisher pub_sat2_;
+  
+  /// Superimposed flag image publisher
+  image_transport::CameraPublisher pub_si_;
+  
+  /// Superimposed flag image publisher
+  image_transport::CameraPublisher pub_si2_;
+
   /// Objects publisher
   ros::Publisher pub_objects_;
-
+  
+  /// Slices publisher
+  ros::Publisher pub_slices_;
+  
   /// Objects vector;
   std::vector<hflObj> objects_;
 
   /// Pointcloud publisher
   ros::Publisher pub_points_;
 
+  /// Telemetry Data
+  telemetry telem_{};
+
   /// Pointcloud msg
   std::shared_ptr<sensor_msgs::PointCloud2> pointcloud_;
 
+  /// Slices msg
+  std::shared_ptr<std_msgs::UInt16MultiArray> slices_;
+  
   /// ROS Transform
   geometry_msgs::TransformStamped global_tf_;
 
   /// Transform
   cv::Mat transform_;
 
-  /// Pointer to depth image second return
-  cv_bridge::CvImagePtr p_image_depth2_;
+  // Diagnostic Updater
+  diagnostic_updater::Updater updater_;
 
-  /// Pointer to 16 bit intensity image second return
-  cv_bridge::CvImagePtr p_image_intensity2_;
 };
 }  // namespace hfl
 #endif  // IMAGE_PROCESSOR__HFL110DCU_H_

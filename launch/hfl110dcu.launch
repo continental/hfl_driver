@@ -7,8 +7,12 @@
   <arg name="parent_frame_id" default="custom_frame" />
   <arg name="camera_ip_address" default="192.168.10.21" />
   <arg name="frame_data_port" default="57410" />
-  <arg name="object_data_port" default="57411" />
+  <arg name="pdm_data_port" default="57411" />
+  <arg name="object_data_port" default="57412" />
+  <arg name="tele_data_port" default="57413" />
+  <arg name="slice_data_port" default="57414" />
   <arg name="computer_ip_address" default="192.168.10.5" />
+  <arg name="publish_tf" default="true" />
 
   <!-- Node Manager Arguments -->
   <arg name="node_name" value="$(arg camera_frame_id)" />
@@ -39,7 +43,11 @@
     <param name="camera_ip_address" value="$(arg camera_ip_address)" />
     <param name="computer_ip_address" value="$(arg computer_ip_address)" />
     <param name="frame_data_port" value="$(arg frame_data_port)" />
+    <param name="pdm_data_port" value="$(arg pdm_data_port)" />
     <param name="object_data_port" value="$(arg object_data_port)" />
+    <param name="tele_data_port" value="$(arg tele_data_port)" />
+    <param name="slice_data_port" value="$(arg slice_data_port)" />
+    <param name="publish_tf" value="$(arg publish_tf)" />
   </node>
 
   <!-- Run a passthrough filter to clean the pointcloud -->

@@ -121,10 +121,22 @@ bool CameraCommander::udpInit()
   node_handler_.getParam("frame_data_port", frame_data_port_);
   ROS_INFO("%s/frame_data_port:      %i", namespace_.c_str(), frame_data_port_);
 
+  // Get pdm data port number
+  node_handler_.getParam("pdm_data_port", pdm_data_port_);
+  ROS_INFO("%s/pdm_data_port:      %i", namespace_.c_str(), pdm_data_port_);
+  
   // Get object data port number
   node_handler_.getParam("object_data_port", object_data_port_);
   ROS_INFO("%s/object_data_port:      %i", namespace_.c_str(), object_data_port_);
 
+  // Get telemetry data port number
+  node_handler_.getParam("tele_data_port", tele_data_port_);
+  ROS_INFO("%s/tele_data_port:      %i", namespace_.c_str(), tele_data_port_);
+  
+  // Get slice data port number
+  node_handler_.getParam("slice_data_port", slice_data_port_);
+  ROS_INFO("%s/slice_data_port:      %i", namespace_.c_str(), slice_data_port_);
+  
   // Get ethernet namespace node handler
   ros::NodeHandle ethernet_interface_handler(ethernet_interface_);
 
@@ -140,24 +152,36 @@ bool CameraCommander::udpInit()
   ros::service::waitForService(udp_send_service_client_.getService(), -1);
   ROS_INFO("UDP Communication online");
 
-  // Create a Frame_Data Socket
+  // Create a Frame Data Socket
   if (!createSocket(computer_address_, camera_address_, frame_data_port_, false))
   {
-    // Socket Not Created!
+    ROS_WARN("Frame Socket not created");
     return false;
   }
 
-  // Subscribe to Frame_Data Socket
+  // Subscribe to Frame Data Socket
   frame_data_subscriber_ =
     ethernet_interface_handler.subscribe(std::string("udp/p") +
        std::to_string(frame_data_port_), 1000,
        &CameraCommander::frameDataCallback, this);
+  
+  // Create a PDM Data Socket
+  if (!createSocket(computer_address_, camera_address_, pdm_data_port_, false))
+  {
+    ROS_WARN("PDM Socket not created");
+    return false;
+  }
 
-  ROS_WARN("create object socket");
-  // Create a Object_Data Socket
+  // Subscribe to PDM Data Socket
+  pdm_data_subscriber_ =
+    ethernet_interface_handler.subscribe(std::string("udp/p") +
+       std::to_string(pdm_data_port_), 1000,
+       &CameraCommander::pdmDataCallback, this);
+
+  // Create a Object Data Socket
   if (!createSocket(computer_address_, camera_address_, object_data_port_, false))
   {
-    // Socket Not Created!
+    ROS_WARN("Object Socket not created");
     return false;
   }
 
@@ -166,6 +190,30 @@ bool CameraCommander::udpInit()
        std::to_string(object_data_port_), 1000,
        &CameraCommander::objectDataCallback, this);
 
+  // Create a Telemetry Data Socket
+  if (!createSocket(computer_address_, camera_address_, tele_data_port_, false))
+  {
+    ROS_WARN("Telemetry Socket not created");
+    return false;
+  }
+
+  tele_data_subscriber_ =
+    ethernet_interface_handler.subscribe(std::string("udp/p") +
+       std::to_string(tele_data_port_), 1000,
+       &CameraCommander::teleDataCallback, this);
+  
+  // Create a Slice Data Socket
+  if (!createSocket(computer_address_, camera_address_, slice_data_port_, false))
+  {
+    ROS_WARN("Slice Socket not created");
+    return false;
+  }
+
+  slice_data_subscriber_ =
+    ethernet_interface_handler.subscribe(std::string("udp/p") +
+       std::to_string(slice_data_port_), 1000,
+       &CameraCommander::sliceDataCallback, this);
+  
   // Everything Initialized
   return true;
 }
@@ -272,18 +320,29 @@ error_codes CameraCommander::checkForError()
     return frame_socket_error;
   }
 
+  // Check for PDM Data Publisher on object data topic
+  if (pdm_data_subscriber_ != NULL && pdm_data_subscriber_.getNumPublishers() <= 0)
+  {
+    return pdm_socket_error;
+  }
+  
   // Check for Object Data Publisher on object data topic
   if (object_data_subscriber_ != NULL && object_data_subscriber_.getNumPublishers() <= 0)
   {
     return object_socket_error;
   }
 
-  // Check for LUT Data Publisher on lut data topic
-  if (lut_data_subscriber_ != NULL && lut_data_subscriber_.getNumPublishers() <= 0)
+  // Check for Telemetry Data Publisher on object data topic
+  if (tele_data_subscriber_ != NULL && tele_data_subscriber_.getNumPublishers() <= 0)
   {
-    return lut_socket_error;
+    return tele_socket_error;
   }
 
+  // Check for Slice Data Publisher on slice data topic
+  if (slice_data_subscriber_ != NULL && slice_data_subscriber_.getNumPublishers() <= 0)
+  {
+    return slice_socket_error;
+  }
   return no_error;
 }
 
@@ -325,6 +384,26 @@ void CameraCommander::frameDataCallback(const udp_com::UdpPacket& udp_packet)
   }
 }
 
+void CameraCommander::pdmDataCallback(const udp_com::UdpPacket& udp_packet)
+{
+  // Checks UPD package source IP address
+  if (udp_packet.address == camera_address_)
+  {
+    switch (current_state_)
+    {
+      case state_probe:
+        ROS_INFO_ONCE("Connection established with PDM Data UDP Port!");
+        previous_state_ = state_probe;
+        current_state_ = state_init;
+        break;
+      case state_done:
+        ROS_INFO_ONCE("PDM Data UDP packages arriving...");
+	//flash_->processPDMData(udp_packet.data);
+        break;
+    }
+  }
+}
+
 void CameraCommander::objectDataCallback(const udp_com::UdpPacket& udp_packet)
 {
   // Checks UPD package source IP address
@@ -340,6 +419,46 @@ void CameraCommander::objectDataCallback(const udp_com::UdpPacket& udp_packet)
       case state_done:
         ROS_INFO_ONCE("Object Data UDP packages arriving...");
         flash_->processObjectData(udp_packet.data);
+        break;
+    }
+  }
+}
+
+void CameraCommander::teleDataCallback(const udp_com::UdpPacket& udp_packet)
+{
+  // Checks UPD package source IP address
+  if (udp_packet.address == camera_address_)
+  {
+    switch (current_state_)
+    {
+      case state_probe:
+        ROS_INFO_ONCE("Connection established with Telemetry Data UDP Port!");
+        previous_state_ = state_probe;
+        current_state_ = state_init;
+        break;
+      case state_done:
+        ROS_INFO_ONCE("Telemetry Data UDP packages arriving...");
+        flash_->processTelemetryData(udp_packet.data);
+        break;
+    }
+  }
+}
+
+void CameraCommander::sliceDataCallback(const udp_com::UdpPacket& udp_packet)
+{
+  // Checks UPD package source IP address
+  if (udp_packet.address == camera_address_)
+  {
+    switch (current_state_)
+    {
+      case state_probe:
+        ROS_INFO_ONCE("Connection established with Slice Data UDP Port!");
+        previous_state_ = state_probe;
+        current_state_ = state_init;
+        break;
+      case state_done:
+        ROS_INFO_ONCE("Slice Data UDP packages arriving...");
+        flash_->processSliceData(udp_packet.data);
         break;
     }
   }
@@ -384,31 +503,6 @@ void CameraCommander::dynamicPametersCallback(hfl_driver::HFLConfig& config, uin
     // camera is active
     if (flash_->setGlobalRangeOffset(config.global_range_offset))
       ROS_INFO("%s/global_range_offset: %f", namespace_.c_str(), config.global_range_offset);
-    if (flash_->setChannelRangeOffset(0, config.ch1_offset))
-      ROS_INFO("%s/ch1_offset: %f", namespace_.c_str(), config.ch1_offset);
-    if (flash_->setChannelRangeOffset(1, config.ch2_offset))
-      ROS_INFO("%s/ch2_offset: %f", namespace_.c_str(), config.ch2_offset);
-    if (flash_->setChannelRangeOffset(2, config.ch3_offset))
-      ROS_INFO("%s/ch3_offset: %f", namespace_.c_str(), config.ch3_offset);
-    if (flash_->setChannelRangeOffset(3, config.ch4_offset))
-      ROS_INFO("%s/ch4_offset: %f", namespace_.c_str(), config.ch4_offset);
-
-    if (flash_->setIntensityRangeOffset(0, config.int500_offset))
-      ROS_INFO("%s/int500_offset: %f", namespace_.c_str(), config.int500_offset);
-    if (flash_->setIntensityRangeOffset(1, config.int1000_offset))
-      ROS_INFO("%s/int1000_offset: %f", namespace_.c_str(), config.int1000_offset);
-    if (flash_->setIntensityRangeOffset(2, config.int1500_offset))
-      ROS_INFO("%s/int1500_offset: %f", namespace_.c_str(), config.int1500_offset);
-    if (flash_->setIntensityRangeOffset(3, config.int2000_offset))
-      ROS_INFO("%s/int2000_offset: %f", namespace_.c_str(), config.int2000_offset);
-    if (flash_->setIntensityRangeOffset(4, config.int2500_offset))
-      ROS_INFO("%s/int2500_offset: %f", namespace_.c_str(), config.int2500_offset);
-    if (flash_->setIntensityRangeOffset(5, config.int3000_offset))
-      ROS_INFO("%s/int3000_offset: %f", namespace_.c_str(), config.int3000_offset);
-    if (flash_->setIntensityRangeOffset(6, config.int3500_offset))
-      ROS_INFO("%s/int3500_offset: %f", namespace_.c_str(), config.int3500_offset);
-    if (flash_->setIntensityRangeOffset(7, config.int4096_offset))
-      ROS_INFO("%s/int4096_offset: %f", namespace_.c_str(), config.int4096_offset);
   }
 }
 }  // end of namespace hfl
