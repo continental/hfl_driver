@@ -11,14 +11,9 @@ jobs:
       fail-fast: false
       matrix:
         ros_distribution:
-          - kinetic
           - melodic
           - noetic
         include:
-            # Kinetic Kame (May 2016 - May 2021)
-          - docker_image: rostooling/setup-ros-docker:ubuntu-xenial-ros-kinetic-ros-base-latest
-            ros_distribution: kinetic
-            ros_version: 1
             # Melodic Morenia (May 2018 - May 2023)
           - docker_image: rostooling/setup-ros-docker:ubuntu-bionic-ros-melodic-ros-base-latest
             ros_distribution: melodic
@@ -31,11 +26,11 @@ jobs:
       image: ${{ matrix.docker_image }}
     steps:
       - name: setup directories
-        run: mkdir -p ros_ws/src
+        run: mkdir -p ros_ws/src/hfl_driver
       - name: checkout
         uses: actions/checkout@v2
         with:
-          path: ros_ws/src
+          path: ros_ws/src/hfl_driver
       - name: build and test
         uses: ros-tooling/action-ros-ci@master
         with:
