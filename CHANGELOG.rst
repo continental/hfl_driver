@@ -2,8 +2,8 @@
 Changelog for package hfl_driver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.0 (2021-03-18)
+------------------
 * Merge pull request `#74 <https://github.com/continental/hfl_driver/issues/74>`_ from flynneva/fix/extrinsics_quaternion
 * remove kinetic from CI due to EOL
 * rotation fix, pointcloud size fix, telemetry parsing
