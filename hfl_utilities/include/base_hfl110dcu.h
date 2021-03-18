@@ -46,19 +46,13 @@ const uint16_t FRAME_ROWS{ 32 };
 /// Default frame cols
 const uint16_t FRAME_COLUMNS{ 128 };
 /// Default frame cols
-const uint16_t PIXEL_RETURNS{ 1 };
+const uint16_t PIXEL_RETURNS{ 2 };
 /// Default frame cols
 const uint16_t PIXEL_SLICES{ 128 };
-/// Default words per UDP packet
-const uint32_t WORDS_PER_PACKET{ 0x168 };
 ///  Default bits used for intensity
-const uint8_t INTENSITY_BITS{ 5 };
+const uint8_t INTENSITY_BITS{ 13 };
 /// Default bits used for range
-const uint8_t RANGE_BITS{ 8 };
-/// Default bits used for range presicion
-const uint8_t RANGE_PRECISION_BITS{ 6 };
-/// Default bits used for intensity publishing
-const uint8_t INTENSITY_PUBLISH_BITS{ 12 };
+const uint8_t RANGE_BITS{ 16 };
 /// Default frame ID
 const char FRAME_ID[] = "hfl110dcu";
 /// Default camera intrinsics
@@ -102,26 +96,6 @@ public:
   /// @return bool true if given global range offset is set
   ///
   bool setGlobalRangeOffset(double offset);
-
-  ///
-  /// Sets channel range offset
-  ///
-  /// @param[in] ch channel number
-  /// @param[in] offset channel range offset to set
-  ///
-  /// @return bool true if given channel range offset is set
-  ///
-  bool setChannelRangeOffset(uint8_t ch, double offset);
-
-  ///
-  /// Sets intensity range offset
-  ///
-  /// @param[in] band intensity range number
-  /// @param[in] offset channel range offset to set
-  ///
-  /// @return bool true if given intensity band range offset is set
-  ///
-  virtual bool setIntensityRangeOffset(uint8_t band, double offset);
 
 protected:
   /// Range Magic Number
@@ -168,6 +142,24 @@ protected:
   /// @return bool
   ///
   virtual bool processObjectData(const std::vector<uint8_t>& data) = 0;
+
+  ///
+  /// Process the telemetry data from udp packets
+  ///
+  /// @param[in] data telemetry data
+  ///
+  /// @return bool
+  ///
+  virtual bool processTelemetryData(const std::vector<uint8_t>& data) = 0;
+
+  ///
+  /// Process the slice data from udp packets
+  ///
+  /// @param[in] data slice data
+  ///
+  /// @return bool
+  ///
+  virtual bool processSliceData(const std::vector<uint8_t>& data) = 0;
 };
 }  // namespace hfl
 

@@ -125,22 +125,6 @@ protected:
   /// global range offset
   double global_offset_;
 
-  /// channel range offset
-  double ch1_offset_;
-  double ch2_offset_;
-  double ch3_offset_;
-  double ch4_offset_;
-
-  /// intensity range offset
-  double int500_offset_;
-  double int1000_offset_;
-  double int1500_offset_;
-  double int2000_offset_;
-  double int2500_offset_;
-  double int3000_offset_;
-  double int3500_offset_;
-  double int4096_offset_;
-
   /// Camera's frame configurations
   std::shared_ptr<hfl::Frame> frame_;
 
@@ -186,26 +170,6 @@ public:
   virtual bool setGlobalRangeOffset(double offset) = 0;
 
   ///
-  /// Sets channel range offset
-  ///
-  /// @param[in] ch channel number
-  /// @param[in] offset channel range offset to set
-  ///
-  /// @return bool true if given channel range offset is set
-  ///
-  virtual bool setChannelRangeOffset(uint8_t ch, double offset) = 0;
-
-  ///
-  /// Sets intensity range offset
-  ///
-  /// @param[in] band intensity range number
-  /// @param[in] offset channel range offset to set
-  ///
-  /// @return bool true if given intensity band range offset is set
-  ///
-  virtual bool setIntensityRangeOffset(uint8_t band, double offset) = 0;
-
-  ///
   /// Parse packet into depth and intensity image
   ///
   /// @param[in] start_byte starting byte, packet packet data to parse
@@ -241,6 +205,24 @@ public:
   ///
   virtual bool processObjectData(const std::vector<uint8_t>& data) = 0;
 
+  ///
+  /// Process the telemetry data from udp packets
+  ///
+  /// @param[in] data telemetry data
+  ///
+  /// @return bool
+  ///
+  virtual bool processTelemetryData(const std::vector<uint8_t>& data) = 0;
+
+  ///
+  /// Process the slice data from udp packets
+  ///
+  /// @param[in] data slice data
+  ///
+  /// @return bool
+  ///
+  virtual bool processSliceData(const std::vector<uint8_t>& data) = 0;
+  
   ///
   /// Reference to the frame_ member variable
   ///
