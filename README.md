@@ -1,6 +1,8 @@
 # Continental's HFL110 ROS Driver
 This package was designed to be a [Robotic Operating System (ROS)](https://index.ros.org/about/) driver for [Continental's 3D Flash Lidar products](https://www.continental-automotive.com/en-gl/Passenger-Cars/Autonomous-Mobility/Enablers/Lidars/3D-Flash-Lidar).
 
+[![ROS 1 CI](https://github.com/alten-labs/continental-hfl-driver/actions/workflows/ros_ci.yml/badge.svg)](https://github.com/alten-labs/continental-hfl-driver/actions/workflows/ros_ci.yml)
+
 **Supported platforms/releases**:
 | Platform                                                   | ROS Release                                                    |
 | ---------------------------------------------------------- | -------------------------------------------------------------- |
